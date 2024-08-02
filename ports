@@ -1,0 +1,9 @@
+50740 REACT_APP (Changed in the package.json)
+50741 EXPRESS_APP (Changed in the app/backend/bin/www)
+50742
+50743
+50744 MONGODB (Changed when running)
+
+
+EXPRESS_PORT é usada em [client/pages/NewDemo.js, client/pages/Demo.js] para fazer as requisições para o backend.
+MONGODB_PORT é usada em [backend/app.js, backend/parser.py] para fazer as requisições para a base de dados.
