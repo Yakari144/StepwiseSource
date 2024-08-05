@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const PopUpDemoID = ({demoID, onClose}) => {
   const [copied, setCopied] = useState(false);
   var message = 'Your presentation is ready!';
-  var link = 'http://localhost:50740/demo/' + demoID;
+  var link = 'http://stepwisesource.epl.di.uminho.pt/demo/' + demoID;
   let navigate = useNavigate();
 
   const handleGoToPresentation = () => {
