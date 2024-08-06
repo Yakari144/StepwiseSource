@@ -58,7 +58,8 @@ const NewDemo = () => {
 
     const handleCreateDemo = () => {
       // send a POST request to the server with the text
-      fetch("http://localhost:"+EXPRESS_PORT+"/api/demo", {
+      link = "http://localhost:"+EXPRESS_PORT+"/api/demo"
+      fetch(link, {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
