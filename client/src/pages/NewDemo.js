@@ -4,7 +4,7 @@ import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox compo
 import Editor from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view"
 
-const BASE_URL = process.env.BASE_URL || "http://localhost";
+const BASE_URL = process.env.BASE_URL || "http://193.136.19.202";
 const EXPRESS_PORT = process.env.EXPRESS_PORT || "50741";
 
 let myTheme = EditorView.theme({
