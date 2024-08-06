@@ -3,7 +3,9 @@ import {React , useState, useRef} from 'react';
 import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox component
 import Editor from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view"
-const EXPRESS_PORT = "50741"
+
+const BASE_URL = process.env.BASE_URL || "http://localhost";
+const EXPRESS_PORT = process.env.EXPRESS_PORT || "50741";
 
 let myTheme = EditorView.theme({
   "&": {
@@ -58,7 +60,7 @@ const NewDemo = () => {
 
     const handleCreateDemo = () => {
       // send a POST request to the server with the text
-      let link = "http://localhost:"+EXPRESS_PORT+"/api/demo"
+      let link = BASE_URL+":"+EXPRESS_PORT+"/api/demo"
       fetch(link, {
           method: "POST",
           headers: {

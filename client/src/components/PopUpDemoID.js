@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './PopUpDemoID.css';
 import { useNavigate } from 'react-router-dom';
+const ACTUAL_URL = process.env.ACTUAL_URL || "http://stepwisesource.epl.di.uminho.pt";
 
 const PopUpDemoID = ({demoID, onClose}) => {
   const [copied, setCopied] = useState(false);
   var message = 'Your presentation is ready!';
-  var link = 'http://stepwisesource.epl.di.uminho.pt/demo/' + demoID;
+  var link = ACTUAL_URL+'/demo/' + demoID;
   let navigate = useNavigate();
 
   const handleGoToPresentation = () => {

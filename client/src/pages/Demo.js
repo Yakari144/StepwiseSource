@@ -5,7 +5,9 @@ import Navigation from '../components/Navigation';
 import Loading from '../components/Loading';
 import './Demo.css';
 import { useParams, useNavigate } from 'react-router-dom';
-const EXPRESS_PORT = "50741"
+
+const BASE_URL = process.env.BASE_URL || "http://localhost";
+const EXPRESS_PORT = process.env.EXPRESS_PORT || "50741";
 
 function Demo() {
   var [data, setData] = useState({
@@ -19,7 +21,7 @@ function Demo() {
   var [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
-    fetch("http://localhost:"+EXPRESS_PORT+"/api/"+id)
+    fetch(BASE_URL+":"+EXPRESS_PORT+"/api/"+id)
       .then((res) => res.json())
       .then((info) => {
         if(!info.slides){
