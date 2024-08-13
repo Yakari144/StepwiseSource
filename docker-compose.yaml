@@ -3,24 +3,24 @@ services:
   frontend:
     container_name: PG50477-Stepwise-Source-Frontend
     build:
-      context: ./Stepwise-Source-Frontend
+      context: ./client
       args:
         - REACT_APP_API_URL=${REACT_APP_API_URL}
     ports:
       - "50740:80"
     volumes:
-      - ./Stepwise-Source-Frontend:/app
+      - ./client:/app
     stdin_open: true
     tty: true
 
   backend:
     container_name: PG50477-Stepwise-Source-Backend
     build:
-      context: ./Stepwise-Source-Backend
+      context: ./backend
     ports:
       - "50741:50741"
     volumes:
-      - ./Stepwise-Source-Backend:/app
+      - ./backend:/app
     environment:
       - PYTHONUNBUFFERED=1
       - MONGO_URI=mongodb://mongo:27017/
