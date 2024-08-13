@@ -1,17 +1,12 @@
 version: "3"
 services:
-  frontend:
-    container_name: PG50477-Stepwise-Source-Frontend
-    build:
-      context: ./client
-      args:
-        - REACT_APP_API_URL=${REACT_APP_API_URL}
-    ports:
-      - "50740:80"
+  mongo:
+    image: mongo:latest
+    container_name: PG50477-Stepwise-Source-Mongo
     volumes:
-      - ./client:/app
-    stdin_open: true
-    tty: true
+      - mongo-data:/data/db
+    ports:
+      - "50744:27017"
 
   backend:
     container_name: PG50477-Stepwise-Source-Backend
@@ -27,13 +22,18 @@ services:
     depends_on:
       - mongo
 
-  mongo:
-    image: mongo:latest
-    container_name: PG50477-Stepwise-Source-Mongo
-    volumes:
-      - mongo-data:/data/db
+  frontend:
+    container_name: PG50477-Stepwise-Source-Frontend
+    build:
+      context: ./client
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL}
     ports:
-      - "50744:27017"
+      - "50740:80"
+    volumes:
+      - ./client:/app
+    stdin_open: true
+    tty: true
 
 volumes:
   mongo-data:
