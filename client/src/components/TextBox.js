@@ -11,7 +11,7 @@ const TextBox = ({text, onTextChange}) => {
     </div>
   );
 };
-// quarta de tarde projeto em gest
+
 const styles = {
   textBox: {
     flexGrow: 1,

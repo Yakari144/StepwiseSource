@@ -1,0 +1,190 @@
+.highlight {
+  color: red;
+  border: 2px solid rgba(150, 0, 0, 0.2);
+  border-radius: 5px;
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration: line-through;
+}
+.note {
+  color: red;
+  background-color: lime;
+  border-color: #0000ff;
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Next & previous buttons */
+.presentation,
+.annotations-container {
+  /*Make it aligned with the slideshow-container*/
+  cursor: pointer;
+  position: absolute;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+.slideshow-container {
+  display: table-cell;
+  justify-content: space-between;
+}
+
+/* annotations box */
+.annotations {
+  /* center it inside the annotations-container*/
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
+  border: 2px solid black;
+  background-color: beige;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
+  border: 2px solid black;
+  background-color: beige;
+  border-radius: 10px;
+}
+
+/* Hide the images by default */
+.code {
+  /* padding only from the left, not from the top. The amount is the size of the prev*/
+  padding-left: 50px;
+  font-size: medium;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.left {
+  flex: 0 0 auto;
+}
+.middle {
+  flex: 1 1 auto;
+  text-align: center;
+}
+.right {
+  flex: 0 0 auto;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  /*Make it aligned with the slideshow-container*/
+  cursor: pointer;
+  position: relative;
+  padding: 22px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: white(0, 0, 0, 0.8);
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.new-ano-container {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ano-circle {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  background-color: beige;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ano-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.graph-container {
+  position: relative;
+  display: inline-block;
+}
+
+.graph {
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+.dot {
+  cursor: pointer;
+}
+
+.dot:hover {
+  stroke: green;
+  stroke-width: 2;
+}
