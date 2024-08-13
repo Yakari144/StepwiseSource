@@ -11,6 +11,7 @@ COPY requirements.txt .
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 # Install the dependencies
+RUN python -m ensurepip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN npm ci
 
