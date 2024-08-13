@@ -1,41 +1,34 @@
-# syntax=docker/dockerfile:1.4
+# Step 1: Build the React app
+FROM node:16 as build
 
-# Create image based on the official Node image from dockerhub
-FROM node:lts-buster AS development
+# Set the working directory in the container
+WORKDIR /app
 
-# Create app directory
-WORKDIR /usr/src/app
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
 
-# Copy dependency definitions
-COPY package.json /usr/src/app
-COPY package-lock.json /usr/src/app
+# Install the dependencies
+RUN npm install
 
-# Install dependecies
-#RUN npm set progress=false \
-#    && npm config set depth 0 \
-#    && npm i install
-RUN npm ci
+# Copy the rest of the application code into the container
+COPY . .
 
-# Get all the code needed to run the app
-COPY . /usr/src/app
+# Pass the environment variable and build the application
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+# Build the application
+RUN npm run build
 
-# Expose the port the app runs in
-EXPOSE 50740
+# Step 2: Serve the React app using nginx
+FROM nginx:alpine
 
-# Serve the app
-CMD ["npm", "start"]
+# Copy the build files from the previous step
+COPY --from=build /app/build /usr/share/nginx/html
 
-FROM development as dev-envs
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD [ "npm", "start" ]
+# Expose port 80
+EXPOSE 80
+
+# Command to run nginx
+CMD ["nginx", "-g", "daemon off;"]

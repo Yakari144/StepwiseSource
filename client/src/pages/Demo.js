@@ -6,8 +6,8 @@ import Loading from '../components/Loading';
 import './Demo.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const BASE_URL = process.env.BASE_URL || "http://localhost";
-const EXPRESS_PORT = process.env.EXPRESS_PORT || "50741";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost";
+const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
 
 function Demo() {
   var [data, setData] = useState({

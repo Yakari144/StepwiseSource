@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PopUpDemoID.css';
 import { useNavigate } from 'react-router-dom';
-const ACTUAL_URL = process.env.ACTUAL_URL || "http://stepwisesource.epl.di.uminho.pt";
+const ACTUAL_URL = process.env.REACT_APP_ACTUAL_URL || "http://stepwisesource.epl.di.uminho.pt";
 
 const PopUpDemoID = ({demoID, onClose}) => {
   const [copied, setCopied] = useState(false);

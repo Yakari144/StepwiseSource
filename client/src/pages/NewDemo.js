@@ -3,9 +3,10 @@ import {React , useState, useRef} from 'react';
 import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox component
 import Editor from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view"
+// get variables from .env file
 
-const BASE_URL = process.env.BASE_URL || "http://193.136.19.129";
-const EXPRESS_PORT = process.env.EXPRESS_PORT || "50741";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost";
+const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
 
 let myTheme = EditorView.theme({
   "&": {
