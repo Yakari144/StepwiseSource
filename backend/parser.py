@@ -348,12 +348,12 @@ class MyInterpreter(Interpreter):
             self.slides[self.current_slide]["exercises"] = {}
         # add ex to slide
         i = len(self.slides[self.current_slide]["exercises"])
+        reg = reg[1:-1]
         self.slides[self.current_slide]["exercises"]["#"+str(i)] = {"regex":reg,"text":text}
 
         # add ex to html
-        r = "<span class='exercise' reg='"+reg+"' id='#"+str(i)+"'>"
-        r += "CRIAR CAIXA DE INPUT AQUI"
-        r += "</span>"
+        r = "<input type='text' class='exercise' regex='"+reg+"' title='#"+str(i)+"'>"
+        r += "</input> "
         return r
 
     # "\\" NOT_END "{" content "}" "{" TEXT "}"

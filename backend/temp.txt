@@ -20,7 +20,7 @@
 
 \slide{Inicio}{Definir a função}
 \begin
-def nome_da_funcao_nova(...):
+def nome_da_funcao(...):
         ...
         return
 \end
@@ -65,7 +65,7 @@ def nome_da_funcao(arg1, arg2, ...):
         var1 = “ola”
         var2 = 5.4
         var3 = arg1
-        var2 = var2 \exercise{/[-+*\/]/}{Preencha o campo indicado com um Operador por forma a atualizar o valor da variável “var2” para 2.4
+        var2 = var2 \exercise{/^[-+*\/]&/}{Preencha o campo indicado com um Operador por forma a atualizar o valor da variável “var2” para 2.4
         } 3
         ...
         return var1

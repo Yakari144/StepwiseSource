@@ -6,7 +6,7 @@ const MONGODB_PORT = "50744";
 
 
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://epl.di.uminho.pt:'+MONGODB_PORT+'/StepwiseSource';
+var mongoDB = 'mongodb://localhost:'+MONGODB_PORT+'/StepwiseSource';
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 

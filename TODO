@@ -1,6 +1,7 @@
-[] Enviar email ao Eng.Aragão para poder por o site funcional
+[X] Enviar email ao Eng.Aragão para poder por o site funcional
 [] Criar um docker(?)
-[] Criar caixa de input nos exercicios
+[X] Criar caixa de input nos exercicios
+[X] Por caixa de input responsiva ao valor de texto
 [] Por o CSS do codigo dinamico
 [] Criar homepage com "Tutorial" e "Crie a sua apresentação"
 [] Criar a demonstração de Tutorial
