@@ -6,6 +6,7 @@ FROM ubuntu:latest
 # Install Python and Node.js
 RUN apt-get update && apt-get install -y python3 python3-pip nodejs npm
 
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -15,7 +16,8 @@ COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 
 # Install the dependencies
-RUN python3 -m ensurepip
+# Install pip if not already installed
+RUN python3 -m pip --version || apt-get update && apt-get install -y python3-pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN npm ci
 
