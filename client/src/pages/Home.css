@@ -1,0 +1,35 @@
+/* HomePage.css */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9f9e8; /* Background similar to the light tone in the sidebar */
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #333; /* Dark color for the title text */
+}
+
+.button-container {
+  display: flex;
+  gap: 2rem; /* Space between the buttons */
+}
+
+.home-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #333; /* Dark background for the buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-button:hover {
+  background-color: #555; /* Slightly lighter on hover */
+}

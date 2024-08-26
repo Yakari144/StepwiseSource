@@ -14,13 +14,13 @@ function getVariables(variables,currentVariables){
   return vs
 }
 
-function Annotations({variables, currentVariables}) {
+function Annotations({variables, currentVariables,style}) {
     // JSX: JavaScript XML
     return <div className="annotations">
     <ul>
       {getVariables(variables,currentVariables).map((variable,index) => {
         let content = ""
-        if(variable.category === "variable"){
+        if(variable.category === "variable" && variable.text.trim() !== ""){
           content= (
             <li>
               <div className="new-ano-container">
@@ -28,7 +28,7 @@ function Annotations({variables, currentVariables}) {
                   {index+1}
                 </div>
                 <div className="ano-box">
-                  <span className={variable.command}>
+                  <span className={variable.command} style={style[variable.command]}>
                     {variable.text}
                   </span>
                 </div>

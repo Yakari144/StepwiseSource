@@ -1,0 +1,95 @@
+\newfixed{bold}{
+    bold
+}
+
+\newfixed{highlight1}{
+    color : pink;
+    bold
+}
+\newfixed{highlight2}{
+    color : purple;
+    bold
+}
+\newfixed{highlight3}{
+    color : red;
+    bold
+}
+
+\slide{EmptySlide}{1 Create an empty slide}
+\begin
+\bold{\\slide\{\}\{\}}{ }
+\end
+
+\slide{SlideTitle}{2 Create a slide with a title}
+\begin
+\\slide\{\highlight1{Begining}{Here you will set the ID of the slide you are creating}\}\{\highlight2{This is the first slide}{This is where you will set the title of the slide}\}
+\end
+
+\slide{SlideContent}{3 Create a slide with a title and a content}
+\begin
+\\slide\{Begining\}\{This is the first slide\}
+\bold{\\begin
+This is the content of the slide
+\\end}{This is the content of the slide}
+\end
+
+\slide{CreateCommand}{7 Create new styling commands}
+\begin
+\bold{\\newfixed\{\highlight1{\\highlight}{Here you can define the name of the command}\}\{
+    \highlight2{color : red;
+    background-color : lime;
+    border-color : #0000ff;
+    bold;
+    italic;
+    underline}{The content inserted here will be the styling of the command, you can define the color, background-color, border-color, bold, italic, underline and strikethrough}
+\}}{ }
+\end
+
+\slide{GlobalVars}{4 Add global variables}
+\begin
+\bold{
+\\highlight\{Comment\}\{This highlighted text is commented by this text\}
+}{This is how you can add a global comment that can be used in the slides}
+\end
+
+\slide{ApplyGlobalVars}{5 Apply those global variables to the slide}
+\begin
+\end
+
+\slide{LocalVars}{6 Add and apply local variables}
+\begin
+\end
+
+
+\slide{ApplyCommand}{8 Apply those stylings to the slide}
+\begin
+\end
+
+\slide{ChangeCommand}{9 Make slight changes to the styling command}
+\begin
+\end
+
+\slide{Exercise}{10 Create Exercise command}
+\begin
+\end
+
+\slide{ApplyEx}{11 Apply the exercise command to the slide}
+\begin
+\end
+
+\slide{RightWrong}{12 Rigth answer to the exercise and wrong answer to the exercise}
+\begin
+\end
+
+\order{EmptySlide,
+SlideTitle,
+SlideContent,
+GlobalVars,
+ApplyGlobalVars,
+LocalVars,
+CreateCommand,
+ApplyCommand,
+ChangeCommand,
+Exercise,
+ApplyEx,
+RightWrong}

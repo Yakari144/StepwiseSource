@@ -1,0 +1,108 @@
+grammar = r'''
+//Regras Sintaticas
+start: commands
+commands: command+
+
+command: slide code_block
+    | nreactive
+    | nfixed
+    | order
+    | variable // Commands created using nreactive or nfixed
+    
+// COMANDO \slide{VarsLoc}{Sobre as variáveis locais}
+slide : "\\" SLIDE "{" ID "}" "{" TEXT "}"
+
+// COMANDO \begin codigo_a_demonstrar \end
+code_block: "\\" BEGIN content "\\" END
+
+content: (entry|code)+
+
+entry: "\\" EXERCISE "{" REGEX "}" "{" TEXT "}"
+    | "\\" NOT_END "{" content "}" "{" TEXT "}"
+    | "\\" NOT_END "{" content "}"
+
+NOT_END: /(?![eE][nN][dD])[a-zA-Z][a-zA-Z0-9_]+/
+
+code: CODE
+CODE: /(\\\\|\\\}|[^\\\}\{])+/
+    
+// COMANDO \order{a,b,(c|d),e}
+order: "\\" ORDER "{" exp "}"
+exp: term
+    | exp ("|" term)
+term: factor
+    | term ("," factor)
+factor: ID
+    | "(" exp ")"
+
+// COMANDO \newreactive{VarsLoc}{text-color = red; color = blue; ...}
+nreactive: "\\" NEWREACTIVE "{" ID "}" "{" mycss (";" mycss)* "}"
+
+// COMANDO \newfixed{VarsLoc}{text-color = red; color = blue; ...}
+nfixed: "\\" NEWFIXED "{" ID "}" "{" mycss (";" mycss)* "}"
+
+// COMANDO \var{Args}{Argumentos são variáveis ....}
+variable: "\\" VARIABLE "{" ID "}" "{" TEXT "}"
+
+mycss: TXT_COLOR ":" COLOR
+    | BG_COLOR ":" COLOR
+    | BORDER_COLOR ":" COLOR
+    | BOLD
+    | ITALIC
+    | UNDERLINE
+    | STRIKETHROUGH
+    | TXT_SIZE ":" NUM
+    | TXT_ALIGN ":" ALIGN
+    | TXT_STYLE ":" STYLE               // ??
+
+TXT_COLOR: "color"
+BG_COLOR: "background-color"
+BORDER_COLOR: "border-color"
+BOLD: "bold"
+ITALIC: "italic"
+UNDERLINE: "underline"
+STRIKETHROUGH: "strikethrough"
+COLOR: /[a-zA-Z]/
+    | HEX
+STYLE: "normal"
+    | "italic"
+    | "oblique"
+ALIGN: "left"
+    | "right"
+    | "center"
+NUM: /[0-9]+/
+TXT_SIZE: "text-size"
+TXT_STYLE: "text-style"
+TXT_ALIGN: "text-align"
+HEX: /\#[0-9a-fA-F]{6}/
+    
+
+NOTE: "nota" | "note"
+SLIDE: "diapositivo" | "slide"
+BEGIN: "inicio" | "begin"
+END: "fim" | "end"
+HIGHLIGHT: "destaque" | "highlight"
+EXERCISE: "exercicio" | "exercise"
+ORDER: "ordem" | "order"
+NEWREACTIVE: "novoreativo" | "newreactive"
+NEWFIXED: "novofixo" | "newfixed"
+
+
+
+//Regras Lexicográficas
+ID: ("a".."z"|"A".."Z")("a".."z"|"A".."Z"|"_"|"0".."9")*
+VARIABLE: /(?!"newreactive"|"newfixed"|"novoreativo"|"novofixo")[a-z_A-Z][a-zA-Z_0-9]*/
+
+TEXT: /((\\\})|([^}]))+/
+
+REGEX: /\/(\\\/|[^\/])+\//
+
+//string: DOUBLE_S
+//    | SINGLE_S
+//DOUBLE_S: /\"(\\\\|(\\\")|[^\"])+\"/ 
+//SINGE_S: /\'(\\\\|(\\\')|[^\'])+\'/
+
+//Tratamento dos espaços em branco
+%import common.WS
+%ignore WS
+'''

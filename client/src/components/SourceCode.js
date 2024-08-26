@@ -1,6 +1,8 @@
 import React from 'react';
+import StyledHTML from '../components/StyledHTML';
 
-function SourceCode({slide, style}) {
+
+function SourceCode({slide,style}) {
     // inside the slide.code there will be spans with the class names, insert the code in the div with the class name 'code fade'
     // check if the string matches the regex and return a boolean
     function checkRegex(str, regex) {
@@ -44,14 +46,17 @@ function SourceCode({slide, style}) {
             }
         });
         return true;
-      }
+    }
     
-      setInputFunctionality();
+    setInputFunctionality();
+
 
     return (
-    <pre>
-        <div style = {style[0]} className='code fade' id={slide.idSlide} name={slide.text} dangerouslySetInnerHTML={{ __html: slide.code }}/>
-    </pre>
+    <div className='code fade' id={slide.idSlide} name={slide.text}>
+      <pre>
+        <StyledHTML style={style} html={slide.code} />
+      </pre>
+    </div>
     )
 }
 

@@ -3,6 +3,7 @@ import Annotations from '../components/Annotation';
 import SourceCode from '../components/SourceCode';
 import Navigation from '../components/Navigation';
 import Loading from '../components/Loading';
+import StyledHTML from '../components/StyledHTML';
 import './Demo.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -59,6 +60,7 @@ function Demo() {
       }
       styles[variableName] = currentStyle
     }
+    console.log(styles)
     return styles
   }
 
@@ -70,7 +72,7 @@ function Demo() {
                 <Loading />
             </header>
         ) : (
-            <table style={stylesFromVariables(data.variables)} className="page-table">
+            <table className="page-table">
                 <tr>
                   <th style={{width:"75%"}} className="presentation-title"><h1>{data.slides[currentSlide].text}</h1></th>
                   <th style={{width:"25%"}}></th>
@@ -81,7 +83,7 @@ function Demo() {
                   </td>
                   { data.slides[currentSlide].variables.length > 0 &&
                   <td className="annotations-container">
-                   <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} /> 
+                   <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
                   </td>
                   }
                 </tr>

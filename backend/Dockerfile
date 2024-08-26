@@ -6,7 +6,6 @@ FROM ubuntu:latest
 # Install Python and Node.js
 RUN apt-get update && apt-get install -y python3 python3-pip nodejs npm
 
-
 # Create app directory
 WORKDIR /usr/src/app
 

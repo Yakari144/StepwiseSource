@@ -32,7 +32,7 @@ entry: "\\" EXERCISE "{" REGEX "}" "{" TEXT "}"
 NOT_END: /(?![eE][nN][dD])[a-zA-Z][a-zA-Z0-9_]+/
 
 code: CODE
-CODE: /(\\\\|\\\}|[^\\\}\{])+/
+CODE: /(\\\\|\\\}|\\\{|[^\\\}\{])+/
     
 // COMANDO \order{a,b,(c|d),e}
 order: "\\" ORDER "{" exp "}"
@@ -187,6 +187,7 @@ class MyInterpreter(Interpreter):
             else:
                 if e.type == "ID":
                     key = e.value
+        print(key,value)
         self.cmds[key] = {"category":"command","type":"reactive","style":value}
     
     # nfixed: "\\" NEWFIXED "{" ID "}" "{" mycss (";" mycss)* "}"
@@ -200,6 +201,7 @@ class MyInterpreter(Interpreter):
             else:
                 if e.type == "ID":
                     key = e.value
+        print(key,value)
         self.cmds[key] = {"category":"command","type":"fixed","style":value}
 
     def mycss(self,tree):
@@ -207,13 +209,13 @@ class MyInterpreter(Interpreter):
         t = ""
         for e in tree.children:
             if e.type == "BOLD":
-                t += "font-weight:bold"
+                t += "font-weight : bold"
             elif e.type == "ITALIC":
-                t += "font-style:italic"
+                t += "font-style : italic"
             elif e.type == "UNDERLINE":
-                t += "text-decoration:underline"
+                t += "text-decoration : underline"
             elif e.type == "STRIKETHROUGH":
-                t += "text-decoration:line-through"
+                t += "text-decoration : line-through"
             else:
                 if not f:
                     t += e.value
@@ -279,6 +281,7 @@ class MyInterpreter(Interpreter):
         if id_ in self.cmds:
             #print("Variável "+id_+"já existe!")
             pass
+        print("variable",variable,id_,value)
         self.cmds[id_] = {"category":"variable","command":variable,"text":value}
 
     # slide : "\\" SLIDE "{" ID "}" "{" TEXT "}"
@@ -384,9 +387,10 @@ class MyInterpreter(Interpreter):
         for e in tree.children:
             if e.type == "CODE":
                 # convert every \\ to \
-                self.current_content += e.value#.replace("\\\\","\\")
+                value = e.value.replace("\\\\","\\").replace("\\{","{").replace("\\}","}")
+                self.current_content += value
                 #print(self.current_content)
-                return e.value
+                return value
 
 
 def handleSlides(slides,idDemo):
