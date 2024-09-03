@@ -52,11 +52,11 @@ function SourceCode({slide,style}) {
 
 
     return (
+    <pre>
     <div className='code fade' id={slide.idSlide} name={slide.text}>
-      <pre>
         <StyledHTML style={style} html={slide.code} />
-      </pre>
     </div>
+    </pre>
     )
 }
 
