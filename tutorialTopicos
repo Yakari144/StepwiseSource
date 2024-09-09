@@ -14,3 +14,21 @@
 #10 Create Exercise command
 #11 Apply the exercise command to the slide
 #12 Rigth answer to the exercise and wrong answer to the exercise
+
+#1 EmptySlide
+#2 SlideTitle
+#3 SlideContent
+#4 CreateCommand
+#5 GlobalVars
+#6 ApplyGlobalVars
+#7 LocalVars
+#8 ApplyCommand
+#9 ChangeCommand
+#10 Exercise
+#11 ApplyEx
+#12 RightWrong
+
+# Slides
+# Commands
+# Variables
+# Exercise

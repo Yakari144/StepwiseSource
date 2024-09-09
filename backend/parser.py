@@ -187,7 +187,7 @@ class MyInterpreter(Interpreter):
             else:
                 if e.type == "ID":
                     key = e.value
-        print(key,value)
+        #print(key,value)
         self.cmds[key] = {"category":"command","type":"reactive","style":value}
     
     # nfixed: "\\" NEWFIXED "{" ID "}" "{" mycss (";" mycss)* "}"
@@ -201,7 +201,7 @@ class MyInterpreter(Interpreter):
             else:
                 if e.type == "ID":
                     key = e.value
-        print(key,value)
+        #print(key,value)
         self.cmds[key] = {"category":"command","type":"fixed","style":value}
 
     def mycss(self,tree):
@@ -281,7 +281,7 @@ class MyInterpreter(Interpreter):
         if id_ in self.cmds:
             #print("Variável "+id_+"já existe!")
             pass
-        print("variable",variable,id_,value)
+        #print("variable",variable,id_,value)
         self.cmds[id_] = {"category":"variable","command":variable,"text":value}
 
     # slide : "\\" SLIDE "{" ID "}" "{" TEXT "}"
@@ -360,7 +360,7 @@ class MyInterpreter(Interpreter):
         return r
 
     # "\\" NOT_END "{" content "}" "{" TEXT "}"
-    def not_end(self,v,cont,text):
+    def not_end(self,v,cont=None ,text=None):
         # if variable is either not defined or a command, create a new one
         if v not in self.cmds or self.cmds[v]["category"]=="command":
             # separator for local variables (slide#varNr)
@@ -371,7 +371,7 @@ class MyInterpreter(Interpreter):
         else:
             name = v
         
-        if text:
+        if text!=None:
             if name in self.cmds:
                 #print("Variável LOCAL "+name+"já existe!")
                 pass
@@ -442,13 +442,14 @@ def addToDB(slides,variables):
     # Close the connection
     client.close()
 
-def main(filename):
+def main(filename, idDemo=None):
     p = Lark(grammar)
     with open(filename, "r") as f:
         frase = f.read()
     tree = p.parse(frase)
     data = MyInterpreter().visit(tree)
-    idDemo = str(abs(int(hash(frase))))
+    if not idDemo:
+        idDemo = str(abs(int(hash(frase))))
     print(idDemo)
     slides = handleSlides(data['slides'],idDemo)
     variables = handleVariables(data['variables'],idDemo)
@@ -460,9 +461,15 @@ def main(filename):
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1:
-        main(sys.argv[1])
+        if len(sys.argv) > 2:
+            pres_id = sys.argv[2]
+        else:
+            pres_id = None
+        main(sys.argv[1],pres_id)
 
-
+# define function where arguments are optional
+def optional_arguments(arg1=None, arg2=None):
+    print(arg1, arg2)
 
 
 
