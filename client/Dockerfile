@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application code into the container
 COPY . .
 
+# Copy the .env.production file into the container
+COPY .env.production .env
+
 # Pass the environment variable and build the application
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
