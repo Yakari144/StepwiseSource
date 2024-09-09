@@ -37,9 +37,9 @@ CODE: /(\\\\|\\\}|\\\{|[^\\\}\{])+/
 // COMANDO \order{a,b,(c|d),e}
 order: "\\" ORDER "{" exp "}"
 exp: term
-    | exp ("|" term)
+    | exp ("," term)
 term: factor
-    | term ("," factor)
+    | term ("|" factor)
 factor: ID
     | "(" exp ")"
 
@@ -227,46 +227,61 @@ class MyInterpreter(Interpreter):
     # order: "\\" ORDER "{" exp "}"
     def order(self,tree):
         # print tree of type Tree
-        self.visit_children(tree)
+        r = []
+        for t in tree.children:
+            if type(t) == Tree:
+                r.extend(self.visit(t))
+        print("order",r)
         #with open("out/graph/"+str(hash(self.graph))+".dot","w") as f:
         #    f.write(self.graph+"}")
         self.graph = "digraph G {\n"
 
     def exp(self,tree):
-        e = None
-        for t in tree.children:
-            if type(t) == Tree:
-                if t.data == "term":
-                    t = self.visit(t)
-                elif t.data == "exp":
-                    e = self.visit(t)
-        # return concatenation of lists "e" and "t"
-        if not e:
-            return t
-        else:
-            return [e[0]+t[0],e[1]+t[1]]
-                
-    def term(self,tree):
         t = None
+        is_seq = False
         for e in tree.children:
             if type(e) == Tree:
-                if e.data == "factor":
-                    f = self.visit(e)
-                elif e.data == "term":
-                    t = self.visit(e)
-        if t:
-            for e in t[1]:
-                for i in f[0]:
-                    self.graph+= e+" -> "+i+"\n"
-            return [t[0],f[1]]
+                if e.data == "term":
+                    term = self.visit(e)
+                    t = term[0]
+                    is_fork = term[1]
+                elif e.data == "exp":
+                    is_seq = True
+                    exp = self.visit(e)
+        if is_seq:
+            if is_fork:
+                t = [t]
+            exp.extend(t)
+            return exp
         else:
-            return f
+            return t
+                
+    def term(self,tree):
+        e = None
+        is_fork = False
+        for t in tree.children:
+            if type(t) == Tree:
+                if t.data == "factor":
+                    term = self.visit(t)
+                elif t.data == "term":
+                    is_fork = True
+                    e,is_f = self.visit(t)
+        if is_fork:
+            # return [[a],[b]]
+            r = []
+            r.append(e)
+            r.append(term)
+        else:
+            r = term
+        return [r,is_fork]
 
     def factor(self,tree):
         if type(tree.children[0]) == Tree:
             return self.visit(tree.children[0])
         elif tree.children[0].type == "ID":
-            return [[tree.children[0].value],[tree.children[0].value]]
+            return [tree.children[0].value]
+        else:
+            print("Erro",tree.children[0])
         
     # variable: "\\" VARIABLE "{" ID "}" "{" TEXT "}"
     def variable(self,tree):
@@ -423,8 +438,11 @@ def handleVariables(variables,idDemo):
         newVariables['variables'].append(variable)
     return newVariables
 
+def handleOrder(order,idDemo):
+    pass
+
 # Add the demo to the mongodb database
-def addToDB(slides,variables):
+def addToDB(slides,variables,order):
     # Connect to the database
     client = pymongo.MongoClient("mongodb://localhost:"+MONGODB_PORT+"/")
     # Get the database
@@ -432,10 +450,12 @@ def addToDB(slides,variables):
     # Get the Collections
     colDemos = db["demos"]
     colSlides = db["variables"]
+    colOrders = db["orders"]
 
     # Add the demo to the database
     colDemos.insert_one(slides)
     colSlides.insert_one(variables)
+    #colOrders.insert_one(order)
 
     #print("Demo added to the database")
 
@@ -455,7 +475,7 @@ def main(filename, idDemo=None):
     variables = handleVariables(data['variables'],idDemo)
 
     # Add the demo to the mongodb database
-    addToDB(slides,variables)
+    addToDB(slides,variables,[])
 
 # When called from the terminal, get the first argument as the filename
 if __name__ == "__main__":
