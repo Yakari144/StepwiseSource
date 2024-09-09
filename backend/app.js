@@ -3,10 +3,15 @@ var path = require('path');
 var logger = require('morgan');
 var cors = require('cors');
 const MONGODB_PORT = "50744";
+// get MONGO_URI from environment variables
+const MONGO_URI = process.env.MONGO_URI;
 
 
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://localhost:'+MONGODB_PORT+'/StepwiseSource';
+if (MONGO_URI) {
+   var mongoDB = MONGO_URI+'/StepwiseSource';
+}
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 
