@@ -465,7 +465,10 @@ if __name__ == "__main__":
             pres_id = sys.argv[2]
         else:
             pres_id = None
-        main(sys.argv[1],pres_id)
+        try:
+            main(sys.argv[1],pres_id)
+        except Exception as e:
+            print(e)
 
 # define function where arguments are optional
 def optional_arguments(arg1=None, arg2=None):
