@@ -4,7 +4,19 @@
 FROM ubuntu:latest
 
 # Install Python and Node.js
-RUN apt-get update && apt-get install -y python3 python3-pip nodejs npm
+#RUN apt-get update && apt-get install -y python3 python3-pip nodejs npm
+
+# Update package list and install prerequisites
+RUN apt-get update && apt-get install -y curl
+
+# Add NodeSource official repository for Node.js 16.x
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+
+# Install Node.js 16.x and other packages
+RUN apt-get install -y nodejs python3 python3-pip
+
+#
+RUN node --version
 
 # Create app directory
 WORKDIR /usr/src/app

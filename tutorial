@@ -93,3 +93,8 @@ ChangeCommand,
 Exercise,
 ApplyEx,
 RightWrong}
+
+\order{EmptySlide,(SlideTitle,SlideContent,GlobalVars)|GlobalVars,
+            (ApplyGlobalVars,LocalVars,CreateCommand)|CreateCommand,
+            (ApplyCommand,ChangeCommand,Exercise)|Exercise,
+            ApplyEx,RightWrong}
