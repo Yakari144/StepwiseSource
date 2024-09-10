@@ -13,19 +13,13 @@ router.get('/api/:idDemo', function(req, res, next) {
     .then(dados=>{
       //Adicionar o nome da cidade de destino
       const slides = dados.slides;
-      console.log("Slides: ", slides);
-      console.log("Slides dados: ", dados);
       //Para cada ligação, criar uma promessa para ir buscar os dados da cidade de destino
       VariableController.getVariable(id)
         .then(d2=>{
           const variables = d2.variables;
-          console.log("Variáveis: ", variables);
-          console.log("Variáveis dados: ", d2);
           OrderController.getOrder(id)
             .then(d3=>{
               const order = d3.order;
-              console.log("Ordem: ", order);
-              console.log("Ordem dados: ", d3);
               const jsonString = order.replace(/'/g, '"');
               const dataStructure = JSON.parse(jsonString);
               const obj = {"slides":slides,"variables":variables,"order":dataStructure};
