@@ -53,5 +53,3 @@ var variableSchema = new mongoose.Schema({
 },{ versionKey: false })
     
 module.exports = mongoose.model('variable',variableSchema)
-    
-  

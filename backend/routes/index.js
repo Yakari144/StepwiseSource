@@ -3,6 +3,7 @@ var router = express.Router();
 
 var DemoController = require('../controllers/demo');
 var VariableController = require('../controllers/variable');
+var OrderController = require('../controllers/order');
 
 /* GET home page. */
 router.get('/api/:idDemo', function(req, res, next) {
@@ -11,12 +12,19 @@ router.get('/api/:idDemo', function(req, res, next) {
   DemoController.getDemo(id)
     .then(dados=>{
       //Adicionar o nome da cidade de destino
-      slides = dados.slides;
+      const slides = dados.slides;
       //Para cada ligação, criar uma promessa para ir buscar os dados da cidade de destino
       VariableController.getVariable(id)
         .then(dados=>{
-          //Adicionar o nome da cidade de destino
-          res.json({slides:slides,variables:dados.variables});
+          const variables = dados.variables;
+          OrderController.getOrder(id)
+            .then(dados=>{
+              const order = dados.order;
+              const jsonString = order.replace(/'/g, '"');
+              const dataStructure = JSON.parse(jsonString);
+              const obj = {"slides":slides,"variables":variables,"order":dataStructure};
+              res.json(obj);
+            })
         })
   })
   .catch(erro=>{

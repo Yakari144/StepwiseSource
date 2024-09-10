@@ -6,7 +6,6 @@ const MONGODB_PORT = "50744";
 // get MONGO_URI from environment variables
 const MONGO_URI = process.env.MONGO_URI;
 
-
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://localhost:'+MONGODB_PORT+'/StepwiseSource';
 if (MONGO_URI) {

@@ -13,28 +13,62 @@ const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
 function Demo() {
   var [data, setData] = useState({
     "variables":[],
-    "slides":[]
+    "slides":[],
+    "order":[]
   });
 
   const { id } = useParams();
   const navigate = useNavigate();
 
-  var [currentSlide, setCurrentSlide] = useState(0)
+  var [currentSlide, setCurrentSlide] = useState(3);
+  var [slideIdxDict, setSlideIdxDict] = useState({});
 
+  // Fetch the data from the backend
   useEffect(() => {
-    fetch(BASE_URL+":"+EXPRESS_PORT+"/api/"+id)
+    fetch(BASE_URL + ":" + EXPRESS_PORT + "/api/" + id)
       .then((res) => res.json())
       .then((info) => {
-        if(!info.slides){
-            navigate("/error")
-        }else{
-            console.log(info)
-            setData(info) ;
+        if (!info.slides) {
+          navigate("/error");
+        } else {
+          // set the data to the info received
+          setData(info);
         }
       })
-        .catch((error) => console.log(error.message));  
-      }, []);
+      .catch((error) => console.log(error.message));
+  }, [id, navigate]);
+  
+  // Set the slideIdxDict and the first slide when data changes
+  useEffect(() => {
+    const defSlideIdxDict = () => {
+      let sID = {};
+      for (let i = 0; i < data.slides.length; i++) {
+        sID[data.slides[i].idSlide] = i;
+      }
+      return sID;
+    };
 
+    if (data && data.slides) {
+      setSlideIdxDict(defSlideIdxDict());
+    }
+  }, [data]); // Trigger this effect when `data` changes
+  
+  // Set the first slide of the presentation according to the order
+  useEffect(() => {
+    const setFirstSlide = (order) => {
+      if (order && order[0]) {
+        if (typeof order[0] === "string") {
+          setCurrentSlide(slideIdxDict[order[0]]);
+        } else {
+          setFirstSlide(order[0][0]);
+        }
+      }
+    };
+
+    setFirstSlide(data.order);
+  }, [slideIdxDict]);
+
+  // Function to change the slide according to the slide index
   const handleSlideChange = (slideIndex) => {
     let r = slideIndex+currentSlide
     if(r<0){
@@ -42,6 +76,12 @@ function Demo() {
     }else if(r>=data.slides.length){
       r = data.slides.length-1
     }
+    setCurrentSlide(r)
+  }
+
+  // Function to change the slide according to the slide id
+  const setSlideById = (slideId) => {
+    let r = slideIdxDict[slideId]
     setCurrentSlide(r)
   }
 
@@ -60,10 +100,21 @@ function Demo() {
       }
       styles[variableName] = currentStyle
     }
-    console.log(styles)
     return styles
   }
 
+  const isTextVariables = (variablesIds,variables) => {
+    var var_with_text = [];
+    variables.forEach(element => {
+      if(variablesIds.includes(element.idVariable)){
+        if(element.text.trim() != "")
+          var_with_text.push(element)
+      }
+    });
+    return var_with_text.length > 0
+  }
+
+  console.log("Current Slide:", currentSlide);
 
   return (
     <div className="Demo">
@@ -82,14 +133,17 @@ function Demo() {
                     <SourceCode slide = {data.slides[currentSlide]} style={stylesFromVariables(data.variables)} />
                   </td>
                   { data.slides[currentSlide].variables.length > 0 &&
-                  <td className="annotations-container">
-                   <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
+                  <td className="annotations-container">{
+                    (isTextVariables(data.slides[currentSlide].variables,data.variables)) ? (
+                    <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
+                    ):(null)
+                    }
                   </td>
                   }
                 </tr>
                 <tr>
                   <td className="navigation-container">
-                    <Navigation slideChanger={handleSlideChange}/>
+                    <Navigation order={data.order} slideChanger={setSlideById}/>
                   </td>
                   <td></td>
                 </tr>

@@ -81,19 +81,6 @@ This is the content of the slide
 \begin
 \end
 
-\order{EmptySlide,
-SlideTitle,
-SlideContent,
-GlobalVars,
-ApplyGlobalVars,
-LocalVars,
-CreateCommand,
-ApplyCommand,
-ChangeCommand,
-Exercise,
-ApplyEx,
-RightWrong}
-
 \order{EmptySlide,(SlideTitle,SlideContent,GlobalVars)|GlobalVars,
             (ApplyGlobalVars,LocalVars,CreateCommand)|CreateCommand,
             (ApplyCommand,ChangeCommand,Exercise)|Exercise,
