@@ -3,6 +3,7 @@ from lark.visitors import Interpreter
 from lark import Discard
 import json
 import pymongo
+import os
 
 MONGODB_PORT = "50744"
 
@@ -135,6 +136,7 @@ class MyInterpreter(Interpreter):
         self.slides = {}
         self.current_slide = ""
         self.current_content = []
+        self.order_array = []
 
     def start(self,tree):
         self.visit_children(tree)
@@ -166,7 +168,7 @@ class MyInterpreter(Interpreter):
         #            f.write("}\n")
         #    f.close()
 
-        return {'variables':self.cmds,'slides':self.slides}
+        return {'variables':self.cmds,'slides':self.slides,'order':self.order_array}
 
     # commands: command+
     def commands(self,tree):
@@ -231,10 +233,11 @@ class MyInterpreter(Interpreter):
         for t in tree.children:
             if type(t) == Tree:
                 r.extend(self.visit(t))
-        print("order",r)
         #with open("out/graph/"+str(hash(self.graph))+".dot","w") as f:
         #    f.write(self.graph+"}")
         self.graph = "digraph G {\n"
+        self.order_array = r
+        
 
     def exp(self,tree):
         t = None
@@ -439,12 +442,21 @@ def handleVariables(variables,idDemo):
     return newVariables
 
 def handleOrder(order,idDemo):
-    pass
+    newOrder = {
+        "idDemo": idDemo,
+        "order": str(order)
+    }
+    return newOrder
 
 # Add the demo to the mongodb database
 def addToDB(slides,variables,order):
-    # Connect to the database
-    client = pymongo.MongoClient("mongodb://localhost:"+MONGODB_PORT+"/")
+    # get mongo path from environment variable
+    mongo_path = os.getenv("MONGO_URI")
+    if mongo_path:
+        client = pymongo.MongoClient(mongo_path)
+    else:
+        # Connect to the database
+        client = pymongo.MongoClient("mongodb://localhost:"+MONGODB_PORT+"/")
     # Get the database
     db = client["StepwiseSource"]
     # Get the Collections
@@ -455,7 +467,7 @@ def addToDB(slides,variables,order):
     # Add the demo to the database
     colDemos.insert_one(slides)
     colSlides.insert_one(variables)
-    #colOrders.insert_one(order)
+    colOrders.insert_one(order)
 
     #print("Demo added to the database")
 
@@ -473,9 +485,10 @@ def main(filename, idDemo=None):
     print(idDemo)
     slides = handleSlides(data['slides'],idDemo)
     variables = handleVariables(data['variables'],idDemo)
+    order = handleOrder(data['order'],idDemo)
 
     # Add the demo to the mongodb database
-    addToDB(slides,variables,[])
+    addToDB(slides,variables,order)
 
 # When called from the terminal, get the first argument as the filename
 if __name__ == "__main__":
