@@ -1,6 +1,7 @@
 // a home page
 import {React , useState, useRef} from 'react';
 import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox component
+import ErrorModal from '../components/ErrorModal'; // Import the TextBox component
 import Editor from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view"
 // get variables from .env file
@@ -43,16 +44,27 @@ let myTheme = EditorView.theme({
 const NewDemo = () => {
     var [text, setText] = useState(" ");
     var [demoID, setDemoID] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const fileInputRef = useRef(null);
 
-    const handleOpenModal = () => {
-      setShowModal(true);
-      console.log("Modal "+demoID+"should be appearing");
+    // Demo Modal
+    const handleOpenDemoModal = (idDemo) => {
+      setDemoID(idDemo);
+      console.log("Modal "+idDemo+"should be appearing");
+    };
+    
+    const handleCloseDemoModal = () => {
+      setDemoID(null);
+    };
+
+    // Error Modal
+    const handleOpenErrorModal = (erro) => {
+      setErrorMessage(erro);
+      console.log("Error Modal "+erro+"should be appearing");
     };
   
-    const handleCloseModal = () => {
-      setShowModal(false);
+    const handleCloseErrorModal = () => {
+      setErrorMessage(null);
     };
 
     const handleTextChange = (newText) => {
@@ -69,10 +81,21 @@ const NewDemo = () => {
           },
           body: JSON.stringify({'text': text})
       })
-      .then((res) => res.json())
+      .then((res) => {
+        if(!res.ok){
+          // get the text sent in the response even if the status is 500
+          res.text()
+            .then(text => {
+              handleOpenErrorModal(text)
+            })
+            return;
+        }
+        else{
+          return res.json()
+        }
+      })
       .then((data) => {
-          setDemoID(data.idDemo);
-          handleOpenModal();
+          handleOpenDemoModal(data.idDemo);
       })
       .catch((error) => {
           console.error("Error creating demo:", error);
@@ -112,7 +135,8 @@ const NewDemo = () => {
       theme={myTheme}
     />
       </div>
-      {showModal && <PopUpDemoID demoID={demoID} onClose={handleCloseModal} />}
+      {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal} />}
+      {errorMessage && <ErrorModal text={errorMessage} onClose={handleCloseErrorModal} />}
     </div>
   );
 };

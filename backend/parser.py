@@ -137,9 +137,9 @@ class MyInterpreter(Interpreter):
         self.current_slide = ""
         self.current_content = []
         self.order_array = []
+        self.order_ids = []
 
     def start(self,tree):
-        self.visit_children(tree)
         # pretty print datastructures
         #with open("out/variables.json","w") as f:
         #    f.write(json.dumps(self.cmds, indent=4, sort_keys=True, ensure_ascii=False))
@@ -167,6 +167,11 @@ class MyInterpreter(Interpreter):
         #                f.write(s+";\n")
         #            f.write("}\n")
         #    f.close()
+        self.visit_children(tree)
+        # check if [k,b,c] in [a,c,d,b,e,w,f,t,g,k,y]
+        non_existing_ids = [x for x in self.order_ids if x not in self.slides.keys()]
+        if len(non_existing_ids) > 0:
+            raise Exception("Unknown slide ids in the order command: "+str(non_existing_ids))
 
         return {'variables':self.cmds,'slides':self.slides,'order':self.order_array}
 
@@ -230,6 +235,7 @@ class MyInterpreter(Interpreter):
     def order(self,tree):
         # print tree of type Tree
         r = []
+        self.order_ids = []
         for t in tree.children:
             if type(t) == Tree:
                 r.extend(self.visit(t))
@@ -238,7 +244,6 @@ class MyInterpreter(Interpreter):
         self.graph = "digraph G {\n"
         self.order_array = r
         
-
     def exp(self,tree):
         t = None
         is_seq = False
@@ -251,9 +256,10 @@ class MyInterpreter(Interpreter):
                 elif e.data == "exp":
                     is_seq = True
                     exp = self.visit(e)
+        
+        if is_fork:
+            t = [t]
         if is_seq:
-            if is_fork:
-                t = [t]
             exp.extend(t)
             return exp
         else:
@@ -282,6 +288,9 @@ class MyInterpreter(Interpreter):
         if type(tree.children[0]) == Tree:
             return self.visit(tree.children[0])
         elif tree.children[0].type == "ID":
+            v = tree.children[0].value
+            if v not in self.order_ids:
+                self.order_ids.append(v)
             return [tree.children[0].value]
         else:
             print("Erro",tree.children[0])
@@ -410,7 +419,6 @@ class MyInterpreter(Interpreter):
                 #print(self.current_content)
                 return value
 
-
 def handleSlides(slides,idDemo):
     newSlides = {
         "idDemo": idDemo,
@@ -426,7 +434,6 @@ def handleSlides(slides,idDemo):
         newSlides['slides'].append(slide)
 
     return newSlides
-
 
 def handleVariables(variables,idDemo):
     newVariables = {
@@ -481,7 +488,7 @@ def main(filename, idDemo=None):
     tree = p.parse(frase)
     data = MyInterpreter().visit(tree)
     if not idDemo:
-        idDemo = str(abs(int(hash(frase))))
+        idDemo = "DI"+str(abs(int(hash(frase))))
     print(idDemo)
     slides = handleSlides(data['slides'],idDemo)
     variables = handleVariables(data['variables'],idDemo)
@@ -503,9 +510,6 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
 
-# define function where arguments are optional
-def optional_arguments(arg1=None, arg2=None):
-    print(arg1, arg2)
 
 
 

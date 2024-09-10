@@ -22,6 +22,7 @@ router.get('/api/:idDemo', function(req, res, next) {
               const order = d3.order;
               const jsonString = order.replace(/'/g, '"');
               const dataStructure = JSON.parse(jsonString);
+              console.log(dataStructure);
               const obj = {"slides":slides,"variables":variables,"order":dataStructure};
               res.json(obj);
             })
@@ -48,7 +49,12 @@ router.post('/api/demo', function(req, res, next) {
   process.stdout.on('data', function(data) {
     idDemo = data.toString();
     // remove the \n character from the end of the string
-    idDemo = idDemo.replace(/\n$/, '');
+    idDemo = idDemo.replace(/\n$/, '').trim();
+    // check with regex if is a valid id
+    if (!idDemo.match(/^DI[0-9]+$/)) {
+      res.status(500).send(idDemo);
+      return;
+    }
     console.log(idDemo);
     res.json({"idDemo":idDemo});
   });
