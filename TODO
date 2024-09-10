@@ -2,9 +2,24 @@
 [] Criar um docker(?)
 [X] Criar caixa de input nos exercicios
 [X] Por caixa de input responsiva ao valor de texto
-[] Por o CSS do codigo dinamico
-[] Criar homepage com "Tutorial" e "Crie a sua apresentação"
+[X] Por o CSS do codigo dinamico
+[X] Criar homepage com "Tutorial" e "Crie a sua apresentação"
 [] Criar a demonstração de Tutorial
-[] Obdecer a ORDER
+[X] Obdecer a ORDER
 [] Gerar o grafo direito
 [] Mudar o Previous e o Next para arvores quando for o caso
+
+# Retoques no que ja está feito
+
+[X] Retirar a caixa dos comentarios quando nao ha comentarios
+[] No highlight do codigo ter uma bola identificadora/um numero tipo indice, tal como ja tem no comentario
+[] Resolver formataçao do codigo (tanto o pre como onde começa o codigo)
+[] Adicionar comentario geral do slide entre o titulo e o codigo.
+
+# Adicionar Pagina de Procurar Demos
+
+[] Ao clicar no create demo aparecer um "Defina o Titulo da sua demonstraçao" que depois será associado a apresentação
+[] Na home page adicionar um outro botao de "Ver Demonstrações"
+[] Criar página de "Ver demonstrações" que seria uma especie de tabela com a lista de demos criadas ex:"Demonstração exemplo [Go to presentation]"
+
+textbox Monaco (https://github.com/Strumenta/calc-monaco-editor) (https://github.com/microsoft/monaco-editor)
