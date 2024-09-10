@@ -9,7 +9,7 @@ const MONGO_URI = process.env.MONGO_URI;
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://localhost:'+MONGODB_PORT+'/StepwiseSource';
 if (MONGO_URI) {
-   var mongoDB = MONGO_URI+'/StepwiseSource';
+   var mongoDB = MONGO_URI+'StepwiseSource';
 }
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
