@@ -21,7 +21,13 @@ db.once('open', function() {
 
 var indexRouter = require('./routes/index');
 var app = express();
-
+// add the line "[dd-mm-yy hh:MM:ss]Express app:error" to the file "logs/log.txt"
+app.on('error', error => {
+   var fs = require('fs');
+   var log = fs.createWriteStream('logs/log.txt', {'flags': 'a'});
+   log.write('['+new Date().toLocaleString()+']Express app:'+error+'\n');
+   log.end();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

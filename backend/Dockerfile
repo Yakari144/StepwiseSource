@@ -36,4 +36,4 @@ COPY . /usr/src/app
 
 EXPOSE 50741
 
-CMD [ "npm", "start", "&>", "logs/log.txt" ]
+CMD [ "npm", "start" ]
