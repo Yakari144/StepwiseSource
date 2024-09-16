@@ -36,4 +36,6 @@ COPY . /usr/src/app
 
 EXPOSE 50741
 
+CMD [ "python3", "parser.py", "tutorial" , "tutorial" ]
+
 CMD [ "npm", "start" ]
