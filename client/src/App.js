@@ -7,7 +7,7 @@ import Home from './pages/Home';
 
 function App() {
   try{
-  const r =(
+  return (
     <div>
       <BrowserRouter>
         <Routes>
@@ -19,13 +19,12 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}catch(e){
-  // write error to the log file in "client/logs" folder
-  console.log(e);
-  // redirect to error page
-  window.location.href = "/error";
-}
-  return r;
+  }catch(e){
+    // write error to the log file in "client/logs" folder
+    console.log(e);
+    // redirect to error page
+    window.location.href = "/error";
+  }
 }
 
 export default App;
