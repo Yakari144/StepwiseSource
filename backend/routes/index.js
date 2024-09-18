@@ -22,7 +22,6 @@ router.get('/api/:idDemo', function(req, res, next) {
               const order = d3.order;
               const jsonString = order.replace(/'/g, '"');
               const dataStructure = JSON.parse(jsonString);
-              console.log(dataStructure);
               const obj = {"slides":slides,"variables":variables,"order":dataStructure};
               res.json(obj);
             })
