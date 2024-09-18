@@ -1,17 +1,19 @@
 import React from 'react';
 
-const GraphNode = ({ x, y,id, onClick }) => (
+const GraphNode = ({ x, y,id, selected,onClick }) => (
   <circle 
     cx={x}
     cy={y} 
     r="5" 
     className="dot" 
     id={"dot_"+id}
+    stroke={selected ? "green" : "none"}
+    strokeWidth={selected ? "3" : "1"}
     onClick={onClick}
   />
 );
 
-const Graph = ({ structure, onNodeClick, properties }) => {
+const Graph = ({ structure, onNodeClick, properties, currentSlide }) => {
   const length = structure.length;
   const height = calcHeight(structure);
   let r = calcZoom(length, height);
@@ -62,15 +64,19 @@ const Graph = ({ structure, onNodeClick, properties }) => {
   };
 
   const renderNodes = (nodes) => {
-    return nodes.map((node) => (
-      <GraphNode
+    return nodes.map((node) => {
+      let isCurrent = false;
+      if (node.id == currentSlide)
+        isCurrent = true;
+      return <GraphNode
         key={node.id}
         x={node.x}
         y={node.y}
         id={"dot_"+node.id}
+        selected={isCurrent}
         onClick={() => onNodeClick(node.id)}
       />
-    ));
+    });
   }
 
   const renderPaths = (nodes,structure) => {
@@ -125,13 +131,12 @@ const Graph = ({ structure, onNodeClick, properties }) => {
     return paths;
   }
 
-
   const renderAll = (nodes) => {
     // get the nodes to render
     const nodesToRender = calculateNodes(nodes, properties.startX, properties.startY);
-    let nodesRendered = renderNodes(nodesToRender);
     let pathsRendered = renderPaths(nodesToRender,structure);
-    let all = nodesRendered.concat(pathsRendered);
+    let nodesRendered = renderNodes(nodesToRender);
+    let all = pathsRendered.concat(nodesRendered);
     return all;
   }
 
@@ -163,8 +168,7 @@ function calcZoom(length, height) {
   return 1
 }
 
-
-const GraphApp = ({order,slideChanger}) => {
+const GraphApp = ({order,slideChanger,currentSlide}) => {
   let properties = {
     startX: 20,
     startY: 20,
@@ -176,6 +180,7 @@ const GraphApp = ({order,slideChanger}) => {
       structure={order}
       onNodeClick={(nodeId) => slideChanger(nodeId)}
       properties={properties}
+      currentSlide={currentSlide}
     />
   );
 };
@@ -242,7 +247,7 @@ const Previous = ({order,slideChanger,currentSlide}) => {
   console.log("Previous of", currentSlide, "is", previous);
   if(previous.length == 1){
     if(previous[0] == -1){
-      return <span className="prev">X</span>
+      return <span className="prev"></span>
     }
     return <span className="prev" onClick={() => {slideChanger(previous[0])}}>Previous</span>
   }else{
@@ -298,7 +303,7 @@ const Next = ({order,slideChanger,currentSlide}) => {
   console.log("Next of", currentSlide, "is", next);
   if(next.length == 1){
     if(next[0] == -1){
-      return <span className="next">X</span>
+      return <span className="next"></span>
     }
     return <span className="next" onClick={() => {slideChanger(next[0])}}>Next</span>
   }else{
@@ -316,9 +321,9 @@ function Navigation({order, slideChanger, currentSlide}) {
       <td className="left">
         <Previous order={order} slideChanger={slideChanger} currentSlide={currentSlide}/>
       </td>
-      <td className="middle" nota="InsertNavGraph">
+      <td className="middle">
         <div className="graph-container">
-          <GraphApp order={order} slideChanger={slideChanger} />
+          <GraphApp order={order} slideChanger={slideChanger} currentSlide={currentSlide}/>
         </div>
       </td>
       <td className="right">
