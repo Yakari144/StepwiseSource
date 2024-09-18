@@ -1,4 +1,3 @@
-import { path } from 'd3';
 import React from 'react';
 
 const GraphNode = ({ x, y,id, onClick }) => (
