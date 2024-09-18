@@ -9,18 +9,25 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost";
 const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
-
-function Demo() {
+// make the 
+function Demo({ id=null }) {
   var [data, setData] = useState({
     "variables":[],
     "slides":[],
     "order":[]
   });
 
-  const { id } = useParams();
+  if(!id){
+    const params = useParams();
+    console.log("PARAMS: ",params);
+    id = params.id;
+  }else{
+    console.log("ID: ",id);
+  }
+  
   const navigate = useNavigate();
 
-  var [currentSlide, setCurrentSlide] = useState(3);
+  var [currentSlide, setCurrentSlide] = useState(0);
   var [slideIdxDict, setSlideIdxDict] = useState({});
 
   // Fetch the data from the backend
@@ -51,33 +58,31 @@ function Demo() {
     if (data && data.slides) {
       setSlideIdxDict(defSlideIdxDict());
     }
+    
+
   }, [data]); // Trigger this effect when `data` changes
   
   // Set the first slide of the presentation according to the order
   useEffect(() => {
     const setFirstSlide = (order) => {
-      if (order && order[0]) {
-        if (typeof order[0] === "string") {
-          setCurrentSlide(slideIdxDict[order[0]]);
-        } else {
-          setFirstSlide(order[0][0]);
-        }
+      if(!order || order.length === 0){
+        return;
+      }else{
+        console.log(slideIdxDict);
+      }
+      let first = order[0];
+      console.log("Order is", order);
+      console.log("First slide is", first);
+      if (Array.isArray(first)) {
+        return setFirstSlide(first);
+      } else {
+        setSlideById(first);
+        return first
       }
     };
 
     setFirstSlide(data.order);
   }, [slideIdxDict]);
-
-  // Function to change the slide according to the slide index
-  const handleSlideChange = (slideIndex) => {
-    let r = slideIndex+currentSlide
-    if(r<0){
-      r = 0
-    }else if(r>=data.slides.length){
-      r = data.slides.length-1
-    }
-    setCurrentSlide(r)
-  }
 
   // Function to change the slide according to the slide id
   const setSlideById = (slideId) => {
@@ -143,7 +148,7 @@ function Demo() {
                 </tr>
                 <tr>
                   <td className="navigation-container">
-                    <Navigation order={data.order} slideChanger={setSlideById}/>
+                    <Navigation order={data.order} slideChanger={setSlideById} currentSlide={data.slides[currentSlide].idSlide}/>
                   </td>
                   <td></td>
                 </tr>

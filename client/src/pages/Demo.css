@@ -12,9 +12,18 @@
   border-radius: 0 3px 3px 0;
 }
 
+/* Slideshow container */
 .slideshow-container {
   display: table-cell;
-  justify-content: space-between;
+  justify-content: left;
+  position: relative;
+
+  /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
+  border: 2px solid black;
+  background-color: beige;
+  border-radius: 10px;
+  padding-left: 40px;
+  padding-top: 2px;
 }
 
 /* annotations box */
@@ -38,30 +47,16 @@
   margin-left: 10px;
 }
 
-/* Slideshow container */
-.slideshow-container {
-  position: relative;
-  /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
-  border: 2px solid black;
-  background-color: beige;
-  border-radius: 10px;
-}
-
 /* Hide the images by default */
 .code {
   /* padding only from the left, not from the top. The amount is the size of the prev*/
-  padding-left: 50px;
+  /*padding-left: 50px;
+  */
   font-size: large;
 }
 
 table {
   width: 100%;
-}
-
-td {
-  flex: 1;
-  display: flex;
-  align-items: stretch;
 }
 
 .left {
@@ -168,5 +163,11 @@ td {
 
 .dot:hover {
   stroke: green;
+  stroke-width: 2;
+}
+
+.path {
+  fill: none;
+  stroke: black;
   stroke-width: 2;
 }
