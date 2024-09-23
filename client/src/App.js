@@ -14,7 +14,7 @@ function App() {
           <Route path="/demo/:id" element={<Demo />} />
           <Route path="/create" element={<NewDemo />} />
           <Route path="/error" element={<ErrorPage />} />
-          <Route path="/tutorial" element={<Demo id="tutorial" />} />
+          <Route path="/tutorial" element={<Demo id="IDtutorial" />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
