@@ -36,6 +36,9 @@ COPY . /usr/src/app
 
 EXPOSE 50741
 
-CMD [ "python3", "parser.py", "tutorial" , "IDtutorial" ]
+# Add wait-for-mongo.sh script
+COPY wait-for-mongo.sh /usr/src/app/wait-for-mongo.sh
+RUN chmod +x /usr/src/app/wait-for-mongo.sh
 
-CMD [ "npm", "start" ]
+# Command to wait for MongoDB, run the Python script, and start the Node server
+CMD [ "sh", "-c", "./wait-for-mongo.sh && python3 parser.py tutorial IDtutorial && npm start" ]
