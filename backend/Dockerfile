@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y curl
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 
 # Install Node.js 16.x and other packages
-RUN apt-get install -y nodejs python3 python3-pip
+RUN apt-get install -y nodejs python3 python3-pip netcat
 
 #
 RUN node --version
