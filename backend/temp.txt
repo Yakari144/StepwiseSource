@@ -15,23 +15,22 @@
     bold
 }
 
-\slide{FistSlide}{Creating a slide}
+\slide{EmptySlide}{1 Create an empty slide}
 \begin
-\bold{\\slide\{\highlight1{Begining}{ }\}\{\highlight2{Introduction Slide}{ }\}}{
-This is how you create a slide in your presentation. 
-The slide ID here is 'FirstSlide' and the Title 'Introduction Slide'.
-}
+\bold{\\slide\{\}\{\}}{ }
 \end
 
-\highlight1{BeginEnd}{The code blocks' content will be the actual text displayed in the slide}
-\slide{CodeBlock}{Code Blocks with 'begin' and 'end'}
+\slide{SlideTitle}{2 Create a slide with a title}
+\begin
+\\slide\{\highlight1{Begining}{Here you will set the ID of the slide you are creating}\}\{\highlight2{This is the first slide}{This is where you will set the title of the slide}\}
+\end
+
+\slide{SlideContent}{3 Create a slide with a title and a content}
 \begin
 \\slide\{Begining\}\{This is the first slide\}
 \bold{\\begin
-\BeginEnd{def main():
-    return
-}
-\\end}{You can include code blocks using the \begin and \end commands.}
+This is the content of the slide
+\\end}{This is the content of the slide}
 \end
 
 \slide{CreateCommand}{7 Create new styling commands}
@@ -75,6 +74,7 @@ The slide ID here is 'FirstSlide' and the Title 'Introduction Slide'.
 \end
 
 \slide{ApplyEx}{11 Apply the exercise command to the slide}
+\description{Texto intodutório ao exercício}
 \begin
 \end
 
@@ -82,4 +82,7 @@ The slide ID here is 'FirstSlide' and the Title 'Introduction Slide'.
 \begin
 \end
 
-\order{GlobalVars}
+\order{EmptySlide,(SlideTitle,SlideContent,GlobalVars)|GlobalVars,
+            (ApplyGlobalVars,LocalVars,CreateCommand)|CreateCommand,
+            (ApplyCommand,ChangeCommand,Exercise)|Exercise,
+            ApplyEx,RightWrong}

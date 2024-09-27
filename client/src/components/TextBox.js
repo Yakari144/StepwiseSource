@@ -7,7 +7,7 @@ const TextBox = ({text, onTextChange}) => {
 
     return (
     <div style={styles.textBox}>
-      <textarea style={styles.textArea} placeholder="Write your own demonstration here" onChange={handleChange} value={text} />
+      <textarea style={styles.textArea} placeholder="Write your own presentation here" onChange={handleChange} value={text} />
     </div>
   );
 };

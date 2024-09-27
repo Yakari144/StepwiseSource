@@ -27,6 +27,7 @@ def nome_da_funcao(...):
 
 \highlight{Args}{Argumentos são variáveis que podem ser passadas à função para esta executar operações com recurso aos mesmos}
 \slide{Argumentos}{Sobre os args} 
+\description{Este slide irá apresentar uma breve descrição}
 \begin
 def nome_da_funcao(\Args{arg1, arg2, ...}):
         var1 = “ola”

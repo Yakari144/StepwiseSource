@@ -3,6 +3,7 @@ import { BrowserRouter,Routes, Route } from 'react-router-dom';
 import Demo from './pages/Demo';
 import NewDemo from './pages/NewDemo';
 import ErrorPage from './pages/ErrorPage';
+import Documentation from './pages/Documentation';
 import Home from './pages/Home';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/demo/:id" element={<Demo />} />
           <Route path="/create" element={<NewDemo />} />
           <Route path="/error" element={<ErrorPage />} />
+          <Route path="/documentation" element={<Documentation />} />
           <Route path="/tutorial" element={<Demo id="IDtutorial" />} />
           <Route path="*" element={<Home />} />
         </Routes>

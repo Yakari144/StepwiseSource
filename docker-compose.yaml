@@ -12,6 +12,8 @@ services:
     container_name: PG50477-Stepwise-Source-Backend
     build:
       context: ./backend
+    depends_on:
+      - mongo
     ports:
       - "50741:50741"
     volumes:
@@ -19,8 +21,6 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - MONGO_URI=mongodb://mongo:27017/
-    depends_on:
-      - mongo
 
   frontend:
     container_name: PG50477-Stepwise-Source-Frontend

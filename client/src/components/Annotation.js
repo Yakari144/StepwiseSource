@@ -15,15 +15,18 @@ function getVariables(variables,currentVariables){
 }
 
 function Annotations({variables, currentVariables,style}) {
-    // JSX: JavaScript XML
-    return <div className="annotations">
-    <ul>
+  
+  
+  // JSX: JavaScript XML
+  return <div className="annotations">
       {getVariables(variables,currentVariables).map((variable,index) => {
         let content = ""
         if(variable.category === "variable" && variable.text.trim() !== ""){
+          if(variable.command === "highlight"){
+            content = null
+          }else{
           content= (
-            <li>
-              <div className="new-ano-container">
+            <div className="new-ano-container">
                 <div className="ano-circle">
                   {index+1}
                 </div>
@@ -32,12 +35,11 @@ function Annotations({variables, currentVariables,style}) {
                     {variable.text}
                   </span>
                 </div>
-              </div>
-            </li>
+            </div>
           )}
+        }
         return content;
         })}
-    </ul>
   </div>;
 }
 

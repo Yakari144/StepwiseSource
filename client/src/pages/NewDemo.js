@@ -3,7 +3,9 @@ import {React , useState, useRef} from 'react';
 import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox component
 import ErrorModal from '../components/ErrorModal'; // Import the TextBox component
 import Editor from "@uiw/react-codemirror";
+import Header from '../components/Header';
 import {EditorView} from "@codemirror/view"
+import './NewDemo.css';
 // get variables from .env file
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost";
@@ -16,18 +18,20 @@ let myTheme = EditorView.theme({
     border: "2px solid black",
     borderRadius: "10px",
     borderColor: "black",
-    minHeight: "80vh",
-    minWidth: "80vw",
+    height: "60vh",
+    width: "80vw",
+    maxHeight: "80vh",
+    maxWidth: "80vw",
     outline: "none"
   },
   ".cm-content": {
     border: "white"
   },
   "&.cm-focused .cm-cursor": {
-    borderLeftColor: "#888"
+    borderLeftColor: "#888",
   },
   "&.cm-focused .cm-selectionBackground, ::selection": {
-    backgroundColor: "#d9d9d9"
+    backgroundColor: "#d9d9d9",
   },
   ".cm-gutters": {
     backgroundColor: "#f5f5dc",
@@ -121,58 +125,35 @@ const NewDemo = () => {
     };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Create your own demonstration</h1>
-      <div style={styles.content}>
-        <div style={styles.buttonContainer}>
-          <button onClick={handleCreateDemo} style={styles.button}>Create Demo</button>
-          <button onClick={handleUploadFile} style={styles.button}>Upload File</button>
-          <input type="file" ref={fileInputRef} style={{display:'none'}} onChange={handleFileChange} />
-        </div>
-        <Editor
-      value={text}
-      onChange={handleTextChange}
-      theme={myTheme}
-    />
+    <div className="page">
+      <div className="HomeHeader">
+        <Header pages={["Presentations","Documentation","About"]}/>
       </div>
-      {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal} />}
-      {errorMessage && <ErrorModal text={errorMessage} onClose={handleCloseErrorModal} />}
+      <div className="new-demo-container">
+        <h1 className="new-demo-header">Create your own presentation</h1>
+        <div className="new-demo-content">
+          <div className="new-demo-button-container">
+            <button onClick={handleCreateDemo} className="new-demo-button">
+              <img className="button-img" src="create.png" alt="home-image" />          
+              Create
+            </button>
+            <button onClick={handleUploadFile} className="new-demo-button">
+              <img className="button-img" src="upload.png" alt="home-image" />
+              Upload  
+            </button>
+            <input type="file" ref={fileInputRef} style={{display:'none'}} onChange={handleFileChange} />
+          </div>
+          <Editor
+        value={text}
+        onChange={handleTextChange}
+        theme={myTheme}
+      />
+        </div>
+        {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal} />}
+        {errorMessage && <ErrorModal text={errorMessage} onClose={handleCloseErrorModal} />}
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px'
-  },
-  header: {
-    marginBottom: '20px'
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    border: '2px solid black',
-    borderRadius: '10px',
-    padding: '10px',
-    backgroundColor: '#f5f5dc' // Match the background color of the text box
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginRight: '10px'
-  },
-  button: {
-    marginBottom: '10px',
-    padding: '10px',
-    border: '2px solid black',
-    borderRadius: '5px',
-    backgroundColor: 'white',
-    cursor: 'pointer'
-  }
 };
 
 export default NewDemo;

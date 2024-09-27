@@ -1,0 +1,50 @@
+/* Container Styles */
+.new-demo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Header Styles */
+.new-demo-header {
+  margin-bottom: 20px;
+}
+
+/* Content Box Styles */
+.new-demo-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f5f5dc; /* Beige background color */
+}
+
+/* Button Container Styles */
+.new-demo-button-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+/* Button Styles */
+.new-demo-button {
+  width: max-content;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button-img {
+  height: 30Q;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}

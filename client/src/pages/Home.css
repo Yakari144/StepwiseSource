@@ -1,11 +1,15 @@
 /* HomePage.css */
+.home-page {
+  background-color: #f9f9e8; /* Background similar to the light tone in the sidebar */
+  max-height: 100vh;
+}
+
 .home-container {
   display: flex;
   flex-direction: column;
+  height: 100ch;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f9f9e8; /* Background similar to the light tone in the sidebar */
 }
 
 .title {

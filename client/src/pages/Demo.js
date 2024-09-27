@@ -3,7 +3,7 @@ import Annotations from '../components/Annotation';
 import SourceCode from '../components/SourceCode';
 import Navigation from '../components/Navigation';
 import Loading from '../components/Loading';
-import StyledHTML from '../components/StyledHTML';
+import Header from '../components/Header';
 import './Demo.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -121,41 +121,49 @@ function Demo({ id=null }) {
 
   console.log("Current Slide:", currentSlide);
 
-  return (
-    <div className="Demo">
-        {(data.slides.length + data.variables.length === 0) ? (
-            <header className="App-header">
-                <Loading />
-            </header>
-        ) : (
-            <table className="page-table">
-                <tr>
-                  <th style={{width:"75%"}} className="presentation-title"><h1>{data.slides[currentSlide].text}</h1></th>
-                  <th style={{width:"25%"}}></th>
-                </tr>
-                <tr>
-                  <td className="slideshow-container">
-                    <SourceCode slide = {data.slides[currentSlide]} style={stylesFromVariables(data.variables)} />
-                  </td>
-                  { data.slides[currentSlide].variables.length > 0 &&
-                  <td className="annotations-container">{
-                    (isTextVariables(data.slides[currentSlide].variables,data.variables)) ? (
-                    <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
-                    ):(null)
-                    }
-                  </td>
-                  }
-                </tr>
-                <tr>
-                  <td className="navigation-container">
-                    <Navigation order={data.order} slideChanger={setSlideById} currentSlide={data.slides[currentSlide].idSlide}/>
-                  </td>
-                  <td></td>
-                </tr>
-            </table>
-        )}
-    </div>
-  );
+  return (data.slides.length + data.variables.length === 0) ? (
+      <header className="App-header">
+          <Loading />
+      </header>
+    ) : ( 
+      <div className="Demo">
+        <div className="DemoHeader">
+          <Header pages={["Create","Documentation","Presentations","About"]}/>
+        </div>
+        <h1 className="presentation-title">Aqui Cabe o Titulo Da Apresentação</h1>
+        <table className="page-table">
+            <tr>
+              <th style={{width:"75%"}} className="slide-title"><h2>{data.slides[currentSlide].text}</h2></th>
+              <th style={{width:"25%"}}></th>
+            </tr>
+            {(data.slides[currentSlide].description && data.slides[currentSlide].description.trim() !== "") &&
+            <tr>
+              <td className="slide-description"><h3>{data.slides[currentSlide].description}</h3></td>
+              <td ></td>
+            </tr>
+            }
+            <tr>
+              <td className="slideshow-container">
+                <SourceCode slide = {data.slides[currentSlide]} style={stylesFromVariables(data.variables)} />
+              </td>
+              { data.slides[currentSlide].variables.length > 0 &&
+              <td className="annotations-container">{
+                (isTextVariables(data.slides[currentSlide].variables,data.variables)) ? (
+                <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
+                ):(null)
+                }
+              </td>
+              }
+            </tr>
+            <tr>
+              <td className="navigation-container">
+                <Navigation order={data.order} slideChanger={setSlideById} currentSlide={data.slides[currentSlide].idSlide}/>
+              </td>
+              <td></td>
+            </tr>
+        </table>
+      </div>
+    )
 }
 
 export default Demo;

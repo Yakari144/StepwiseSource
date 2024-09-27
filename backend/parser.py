@@ -12,7 +12,7 @@ grammar = r'''
 start: commands
 commands: command+
 
-command: slide code_block
+command: slide description? code_block
     | nreactive
     | nfixed
     | order
@@ -20,6 +20,9 @@ command: slide code_block
     
 // COMANDO \slide{VarsLoc}{Sobre as variáveis locais}
 slide : "\\" SLIDE "{" ID "}" "{" TEXT "}"
+
+// COMANDO \description{Aqui vai a descrição do slide}
+description: "\\" DESCRIPTION "{" TEXT "}"
 
 // COMANDO \begin codigo_a_demonstrar \end
 code_block: "\\" BEGIN content "\\" END
@@ -101,6 +104,7 @@ HEX: /\#[0-9a-fA-F]{6}/
 
 NOTE: "nota" | "note"
 SLIDE: "diapositivo" | "slide"
+DESCRIPTION: "descricao" | "description"
 BEGIN: "inicio" | "begin"
 END: "fim" | "end"
 HIGHLIGHT: "destaque" | "highlight"
@@ -326,7 +330,14 @@ class MyInterpreter(Interpreter):
         self.current_slide = k
         self.slides[self.current_slide]["code"] = "<span class='code' id='"+k+"'>"
         self.slides[self.current_slide]["variables"] = []
+        self.slides[self.current_slide]["description"] = ""
 
+    # description: "\\" DESCRIPTION "{" TEXT "}"
+    def description(self,tree):
+        for e in tree.children:
+            if e.type == "TEXT":
+                self.slides[self.current_slide]["description"] = e.value
+        
     # code_block: "\\" BEGIN content "\\" END
     def code_block(self,tree):
         for e in tree.children:
@@ -425,11 +436,19 @@ def handleSlides(slides,idDemo):
         "slides": []
     }
     for k in slides:
-        slide = {'idSlide': k, 'text': slides[k]['text'], 'code': slides[k]['code'], 'variables': slides[k]['variables']}
+        slide = {
+            'idSlide': k,
+            'text': slides[k]['text'],
+            'code': slides[k]['code'],
+            'description': slides[k]['description'],
+            'variables': slides[k]['variables']
+            }
         exercises = []
         if 'exercises' in slides[k]:
             for e in slides[k]['exercises']:
-                exercises.append({'idExercise': e, 'regex': slides[k]['exercises'][e]['regex'], 'text': slides[k]['exercises'][e]['text']})
+                exercises.append({'idExercise': e,
+                                  'regex': slides[k]['exercises'][e]['regex'],
+                                  'text': slides[k]['exercises'][e]['text']})
             slide['exercises'] = exercises
         newSlides['slides'].append(slide)
 
@@ -470,6 +489,10 @@ def addToDB(slides,variables,order):
     colDemos = db["demos"]
     colSlides = db["variables"]
     colOrders = db["orders"]
+
+    with open("data_structure.json","w") as f:
+        f.write(json.dumps([slides,variables,order], indent=4, sort_keys=True, ensure_ascii=False))
+        f.close()
 
     # Add the demo to the database
     colDemos.insert_one(slides)

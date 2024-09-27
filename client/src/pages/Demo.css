@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.Demo {
+  background-color: beige;
+  height: 100vh;
+}
+
 /* Next & previous buttons */
 .presentation,
 .annotations-container {
@@ -20,7 +25,7 @@
 
   /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
   border: 2px solid black;
-  background-color: beige;
+  background-color: white;
   border-radius: 10px;
   padding-left: 40px;
   padding-top: 2px;
@@ -35,7 +40,7 @@
 
   /* make it a box with black and large borders with rounded corners, text inside it should be 10px off the left margin*/
   border: 2px solid black;
-  background-color: beige;
+  background-color: white;
   border-radius: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -56,10 +61,32 @@
 }
 
 table {
-  width: 100%;
+  padding-left: 5%;
+  width: 95%;
+}
+
+.presentation-title {
+  /* center it */
+  text-align: center;
+  font-weight: bold;
+}
+
+.slide-title {
+  padding-left: 2%;
+  /* center it */
+  text-align: left;
+  font-weight: bold;
+}
+
+.slide-description {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  height: 100%;
 }
 
 .left {
+  flex-direction: column;
   flex: 0 0 auto;
   width: 25%;
 }
@@ -69,6 +96,7 @@ table {
   text-align: center;
 }
 .right {
+  flex-direction: column;
   flex: 0 0 auto;
   width: 25%;
 }
@@ -79,7 +107,10 @@ table {
   /*Make it aligned with the slideshow-container*/
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 22px;
+  padding-bottom: 0;
   color: black;
   font-weight: bold;
   font-size: 20px;
@@ -120,17 +151,18 @@ table {
 .new-ano-container {
   position: relative;
   width: 200px;
-  height: 150px;
+  max-height: max-content;
   border: 2px solid black;
   border-radius: 15px;
   padding: 20px;
+  margin: 10px;
   box-sizing: border-box;
 }
 
 .ano-circle {
   position: absolute;
-  top: -20px;
-  left: -20px;
+  top: -10px;
+  left: -10px;
   width: 40px;
   height: 40px;
   background-color: beige;
@@ -150,6 +182,12 @@ table {
   text-align: center;
 }
 
+.wrapped-in-reactive:hover {
+  background-color: black;
+  color: white;
+  text-decoration: underline;
+}
+
 .graph-container {
   position: relative;
   display: inline-block;
@@ -157,6 +195,7 @@ table {
 
 .graph {
   border: 2px solid black;
+  background-color: white;
   border-radius: 15px;
 }
 
