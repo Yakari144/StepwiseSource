@@ -4,6 +4,7 @@ import PopUpDemoID from '../components/PopUpDemoID'; // Import the TextBox compo
 import ErrorModal from '../components/ErrorModal'; // Import the TextBox component
 import Editor from "@uiw/react-codemirror";
 import Header from '../components/Header';
+import NameModal from '../components/NameModal';
 import {EditorView} from "@codemirror/view"
 import './NewDemo.css';
 // get variables from .env file
@@ -50,9 +51,11 @@ const NewDemo = () => {
     var [demoID, setDemoID] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const fileInputRef = useRef(null);
+    const [nameModalOpen, setNameModalOpen] = useState(false);
 
     // Demo Modal
     const handleOpenDemoModal = (idDemo) => {
+      setNameModalOpen(false);
       setDemoID(idDemo);
       console.log("Modal "+idDemo+"should be appearing");
     };
@@ -75,7 +78,7 @@ const NewDemo = () => {
         setText(newText);
     };
 
-    const handleCreateDemo = () => {
+    const createDemo = (demoName) => {
       // send a POST request to the server with the text
       let link = BASE_URL+":"+EXPRESS_PORT+"/api/demo"
       fetch(link, {
@@ -83,7 +86,7 @@ const NewDemo = () => {
           headers: {
               "Content-Type": "application/json"
           },
-          body: JSON.stringify({'text': text})
+          body: JSON.stringify({'demoName':demoName,'text': text})
       })
       .then((res) => {
         if(!res.ok){
@@ -104,7 +107,7 @@ const NewDemo = () => {
       .catch((error) => {
           console.error("Error creating demo:", error);
       });
-    };
+    }
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -123,6 +126,18 @@ const NewDemo = () => {
     const handleUploadFile = () => {
       fileInputRef.current.click();
     };
+
+    const handleCreateDemo = () => {
+      setNameModalOpen(true);
+    }
+
+    const handleNameSubmit = (name) => {
+      if (name === "") {
+        handleOpenErrorModal("Please enter a name for your presentation");
+        return;
+      }
+      createDemo(name);
+    }
 
   return (
     <div className="page">
@@ -149,8 +164,9 @@ const NewDemo = () => {
         theme={myTheme}
       />
         </div>
-        {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal} />}
+        {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal}/>}
         {errorMessage && <ErrorModal text={errorMessage} onClose={handleCloseErrorModal} />}
+        <NameModal  isOpen={nameModalOpen} errorMessage={errorMessage} onClose={() => setNameModalOpen(false)} onSubmit={handleNameSubmit}/>
       </div>
     </div>
   );

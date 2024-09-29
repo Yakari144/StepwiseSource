@@ -44,6 +44,7 @@ var slideSchema = new mongoose.Schema({
 
 var demoSchema = new mongoose.Schema({
     idDemo: String,
+    demoName: String,
     slides: [slideSchema]
 },{ versionKey: false })
     

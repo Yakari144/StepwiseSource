@@ -430,9 +430,10 @@ class MyInterpreter(Interpreter):
                 #print(self.current_content)
                 return value
 
-def handleSlides(slides,idDemo):
+def handleSlides(slides,demoName,idDemo):
     newSlides = {
         "idDemo": idDemo,
+        "demoName": demoName,
         "slides": []
     }
     for k in slides:
@@ -504,7 +505,7 @@ def addToDB(slides,variables,order):
     # Close the connection
     client.close()
 
-def main(filename, idDemo=None):
+def main(filename,demoName, idDemo=None):
     p = Lark(grammar)
     with open(filename, "r") as f:
         frase = f.read()
@@ -513,7 +514,7 @@ def main(filename, idDemo=None):
     if not idDemo:
         idDemo = "DI"+str(abs(int(hash(frase))))
     print(idDemo)
-    slides = handleSlides(data['slides'],idDemo)
+    slides = handleSlides(data['slides'],demoName,idDemo)
     variables = handleVariables(data['variables'],idDemo)
     order = handleOrder(data['order'],idDemo)
 
@@ -523,13 +524,14 @@ def main(filename, idDemo=None):
 # When called from the terminal, get the first argument as the filename
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1:
-        if len(sys.argv) > 2:
-            pres_id = sys.argv[2]
+    if len(sys.argv) > 2:
+        if len(sys.argv) > 3:
+            pres_id = sys.argv[3]
         else:
             pres_id = None
         try:
-            main(sys.argv[1],pres_id)
+            #     filename,    name,      id
+            main(sys.argv[1],sys.argv[2],pres_id)
         except Exception as e:
             print(e)
 

@@ -5,6 +5,7 @@ import NewDemo from './pages/NewDemo';
 import ErrorPage from './pages/ErrorPage';
 import Documentation from './pages/Documentation';
 import Home from './pages/Home';
+import Presentations from './pages/Presentations';
 
 function App() {
   try{
@@ -17,6 +18,7 @@ function App() {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/documentation" element={<Documentation />} />
           <Route path="/tutorial" element={<Demo id="IDtutorial" />} />
+          <Route path="/presentations" element={<Presentations />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>

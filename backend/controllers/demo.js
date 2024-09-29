@@ -2,7 +2,7 @@ var Demo = require('../models/demo')
 
 // Demo list
 module.exports.list = () => {
-        return Demo.find()
+        return Demo.find({},{idDemo:1,demoName:1})
                 .then(docs => {
                         return docs
                 })

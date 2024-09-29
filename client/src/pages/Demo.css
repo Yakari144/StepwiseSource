@@ -191,12 +191,16 @@ table {
 .graph-container {
   position: relative;
   display: inline-block;
-}
-
-.graph {
   border: 2px solid black;
   background-color: white;
   border-radius: 15px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.graph {
+  width: fit-content;
+  height: fit-content;
 }
 
 .path {

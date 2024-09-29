@@ -12,6 +12,7 @@ const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
 // make the 
 function Demo({ id=null }) {
   var [data, setData] = useState({
+    "demoName":"",
     "variables":[],
     "slides":[],
     "order":[]
@@ -39,6 +40,7 @@ function Demo({ id=null }) {
           navigate("/error");
         } else {
           // set the data to the info received
+          console.log(info);
           setData(info);
         }
       })
@@ -130,7 +132,7 @@ function Demo({ id=null }) {
         <div className="DemoHeader">
           <Header pages={["Create","Documentation","Presentations","About"]}/>
         </div>
-        <h1 className="presentation-title">Aqui Cabe o Titulo Da Apresentação</h1>
+        <h1 className="presentation-title">{(data.demoName!="") ? data.demoName : "Aqui Cabe o Titulo Da Apresentação"}</h1>
         <table className="page-table">
             <tr>
               <th style={{width:"75%"}} className="slide-title"><h2>{data.slides[currentSlide].text}</h2></th>

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const GraphNode = ({ x, y,id, selected,onClick }) => (
+const GraphNode = ({ x, y,id,zoom, selected,onClick }) => (
   <circle 
-    cx={x}
-    cy={y} 
-    r="5" 
+    cx={x*zoom}
+    cy={y*zoom} 
+    r={5*zoom} 
     className="dot" 
     id={"dot_"+id}
     stroke={selected ? "green" : "none"}
@@ -16,7 +16,7 @@ const GraphNode = ({ x, y,id, selected,onClick }) => (
 const Graph = ({ structure, onNodeClick, properties, currentSlide }) => {
   const length = structure.length;
   const height = calcHeight(structure);
-  let r = calcZoom(length, height);
+  properties.zoom = calcZoom(length, height);
 
   function handleFork(array,x,y,properties) {
     let l = array.length;
@@ -25,13 +25,13 @@ const Graph = ({ structure, onNodeClick, properties, currentSlide }) => {
     let nodesRendered = [];
     for (let j = 0; j < l; j++) {
       let place = j - half + 0.5;
-      const new_nodes = calculateNodes(array[j], x, y + properties.varY*place);
+      const new_nodes = calculateNodes(array[j], x, y + properties.varY*place,properties.zoom);
       nodesRendered = nodesRendered.concat(new_nodes);
     }
     return nodesRendered
   }
 
-  const calculateNodes = (nodes, x, y) => {
+  const calculateNodes = (nodes, x, y,zoom) => {
     // Recursive function to render nodes and paths
     let nodesRendered = [];
     for(let i = 0; i < nodes.length; i++) {
@@ -73,6 +73,7 @@ const Graph = ({ structure, onNodeClick, properties, currentSlide }) => {
         x={node.x}
         y={node.y}
         id={"dot_"+node.id}
+        zoom={properties.zoom}
         selected={isCurrent}
         onClick={() => onNodeClick(node.id)}
       />
@@ -85,10 +86,10 @@ const Graph = ({ structure, onNodeClick, properties, currentSlide }) => {
     const drawPath = (prevNode, node) => {
       return <line
           key={prevNode.id + "-" + node.id}
-          x1={prevNode.x}
-          y1={prevNode.y}
-          x2={node.x}
-          y2={node.y}
+          x1={prevNode.x*properties.zoom}
+          y1={prevNode.y*properties.zoom}
+          x2={node.x*properties.zoom}
+          y2={node.y*properties.zoom}
           className="path"
         />
     }
@@ -165,7 +166,7 @@ function calcHeight(structure) {
 }
 
 function calcZoom(length, height) {
-  return 1
+  return 1.5
 }
 
 const GraphApp = ({order,slideChanger,currentSlide}) => {
@@ -174,6 +175,7 @@ const GraphApp = ({order,slideChanger,currentSlide}) => {
     startY: 20,
     varX: 30,
     varY: 20,
+    zoom: 1
   }
   return (
     <Graph

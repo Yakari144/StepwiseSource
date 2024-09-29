@@ -5,6 +5,7 @@ const ACTUAL_URL = process.env.REACT_APP_ACTUAL_URL || "http://stepwisesource.ep
 
 const PopUpDemoID = ({demoID, onClose}) => {
   const [copied, setCopied] = useState(false);
+
   var message = 'Your presentation is ready!';
   var link = ACTUAL_URL+'/demo/' + demoID;
   let navigate = useNavigate();
