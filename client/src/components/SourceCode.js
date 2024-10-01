@@ -2,7 +2,7 @@ import React from 'react';
 import StyledHTML from '../components/StyledHTML';
 
 
-function SourceCode({slide,style}) {
+function SourceCode({slide,reactiveVariables,style}) {
   // inside the slide.code there will be spans with the class names, insert the code in the div with the class name 'code fade'
   // check if the string matches the regex and return a boolean
   function checkRegex(str, regex) {
@@ -52,7 +52,7 @@ function SourceCode({slide,style}) {
   return (
   <pre>
   <div className='code fade' id={slide.idSlide} name={slide.text}>
-    <StyledHTML style={style} html={slide.code} />
+    <StyledHTML style={style} html={slide.code} reactiveVariables={reactiveVariables}/>
   </div>
   </pre>
   )

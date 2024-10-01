@@ -4,7 +4,8 @@
 
 .Demo {
   background-color: beige;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 /* Next & previous buttons */
@@ -85,6 +86,13 @@ table {
   height: 100%;
 }
 
+.slide-exercise {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin: 0px;
+}
+
 .left {
   flex-direction: column;
   flex: 0 0 auto;
@@ -161,8 +169,8 @@ table {
 
 .ano-circle {
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: -15px;
+  left: -15px;
   width: 40px;
   height: 40px;
   background-color: beige;

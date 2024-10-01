@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import './Presentations.css'; // Assuming a CSS file to style the table and buttons
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost";
 const EXPRESS_PORT = process.env.REACT_APP_EXPRESS_PORT || "50741";
 
 const Presentations = () => {
-    const [slides, setSlides] = useState([]);
+    const [presentations, setPresentations] = useState([]);
     const flag = false
     const navigate = useNavigate();
 
@@ -19,34 +21,57 @@ const Presentations = () => {
           navigate("/error");
         } else {
           // set the data to the info received
-          setSlides(info);
+          setPresentations(info);
         }
       })
       .catch((error) => console.log(error.message));
     },[navigate]);
 
-    return (
-        <div className="presentations-container">
-            <div className="presentations-header">
-              <Header pages={["Create","Presentations","About"]}/>
-            </div>
-            <div className="presentations-list">
-                <h1>Presentations</h1>
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th></th>
-                    </tr>
-                    {slides.map((slide) => (
-                        <tr>
-                            <td>{slide.demoName}</td>
-                            <td><a href={"/demo/"+slide.idDemo}>Go to presentation</a></td>
-                        </tr>
-                    ))}
-                </table>
-            </div>
+    const handleGoToPresentation = (idDemo) => {
+        navigate(`/demo/${idDemo}`);
+    }
+
+
+  return (
+    <div className="presentations-page">
+        <div className="DemoHeader">
+            <Header pages={["Create","Documentation","Presentations","About"]}/>
         </div>
-    )
-}
+        
+    <div className="presentations-container">
+      <h2>Presentations List</h2>
+      <table className="presentations-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {presentations.length > 0 ? (
+            presentations.map((presentation, index) => (
+              <tr key={index}>
+                <td>{presentation.demoName}</td>
+                <td>
+                  <button
+                    className="action-button go-to-button"
+                    onClick={() => handleGoToPresentation(presentation.idDemo)}
+                  >
+                    Go to
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="2">No presentations found</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+    </div>
+  );
+};
 
 export default Presentations;

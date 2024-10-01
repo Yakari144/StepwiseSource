@@ -139,6 +139,11 @@ const NewDemo = () => {
       createDemo(name);
     }
 
+    const handleCloseNameModal = () => {
+      setNameModalOpen(false)
+      setErrorMessage(null)
+    }
+
   return (
     <div className="page">
       <div className="HomeHeader">
@@ -164,9 +169,8 @@ const NewDemo = () => {
         theme={myTheme}
       />
         </div>
-        {demoID && <PopUpDemoID demoID={demoID} onClose={handleCloseDemoModal}/>}
-        {errorMessage && <ErrorModal text={errorMessage} onClose={handleCloseErrorModal} />}
-        <NameModal  isOpen={nameModalOpen} errorMessage={errorMessage} onClose={() => setNameModalOpen(false)} onSubmit={handleNameSubmit}/>
+        {demoID && <PopUpDemoID demoID={demoID} errorMessage={errorMessage} onClose={handleCloseDemoModal}/>}
+        <NameModal  isOpen={nameModalOpen} errorMessage={errorMessage} onClose={handleCloseNameModal} onSubmit={handleNameSubmit}/>
       </div>
     </div>
   );

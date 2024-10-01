@@ -41,4 +41,4 @@ COPY wait-for-mongo.sh /usr/src/app/wait-for-mongo.sh
 RUN chmod +x /usr/src/app/wait-for-mongo.sh
 
 # Command to wait for MongoDB, run the Python script, and start the Node server
-CMD [ "sh", "-c", "./wait-for-mongo.sh && python3 parser.py tutorial IDtutorial && npm start" ]
+CMD [ "sh", "-c", "./wait-for-mongo.sh && python3 parser.py tutorial 'How to create your presentation' IDtutorial && npm start" ]

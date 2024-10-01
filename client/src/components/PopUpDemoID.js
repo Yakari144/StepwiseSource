@@ -3,7 +3,7 @@ import './PopUpDemoID.css';
 import { useNavigate } from 'react-router-dom';
 const ACTUAL_URL = process.env.REACT_APP_ACTUAL_URL || "http://stepwisesource.epl.di.uminho.pt";
 
-const PopUpDemoID = ({demoID, onClose}) => {
+const PopUpDemoID = ({demoID,errorMessage, onClose}) => {
   const [copied, setCopied] = useState(false);
 
   var message = 'Your presentation is ready!';
@@ -27,15 +27,16 @@ const PopUpDemoID = ({demoID, onClose}) => {
   };
 
   return (
-    <div className="modal">
+    <div className="modal-overlay">
       <div className="modal-content">
         <span className="close" onClick={handleClose}>
           &times;
         </span>
-        <p>{message}</p>
+        <p className="">{message}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <div className="button-container">
-          <button onClick={handleGoToPresentation}>Go to Presentation</button>
-          <button onClick={handleCopyLink}>
+          <button className="submit-button" onClick={handleGoToPresentation}>Go to Presentation</button>
+          <button className="submit-button" onClick={handleCopyLink}>
             {copied ? 'Copied!' : 'Share'}
           </button>
         </div>

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import parse, { domToReact } from "html-react-parser";
+import Tooltip from '@mui/material/Tooltip'; // If you are using Material-UI Tooltip
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
-const StyledHTML = ({style, html}) => {
+const StyledHTML = ({style, reactiveVariables, html}) => {
     const Styledhmtl = styled.div`
     ${Object.keys(style).map((key) => `
       & .${key} {
@@ -11,45 +14,50 @@ const StyledHTML = ({style, html}) => {
       }
     `).join(' ').concat(".wrapped-in-reactive:hover {background-color: black;color: white;text-decoration: underline;}")}
     `
+
+    function wrapSpansWithTooltip(htmlString, variables) {
     
-    function setReactiveFunctionality({idVariable, category, command, text},html) {
-      // get the span with attribute command=idVariable and class=command
-      const element = document.querySelector(`span[command="${idVariable}"].${command}`);
-      // if the element is hovered the text will be shown temporarily
-      // if the element is clicked the text will be shown permanently until the user clicks again
-      if(element){
-        // wrap the element in a Tooltip component
-        console.log("Element Found Updated")
-        element;
-        //parentElement = element.parentElement()
-  //    //  element.parentElement.innerHTML = <Tooltip title={text} arrow><span command="${idVariable}" class="${command}">${element.innerHTML}</span></Tooltip>;
-        //parentElement.replaceChild(element, "<span command=Args2 class=highlight2>CODIGO FONTE</span>");
-        //return element
-        return <span> Encontrado </span>
-      }else{
-        console.error(`Element with command="${idVariable}" and class="${command}" not found`);
-        return null;
-      }
-    }
+      const options = {
+        replace: (domNode) => {
+          // Check if the node is a span element with the matching attributes
+          if (domNode.name === "span" &&
+            domNode.attribs) {
+            for (let i = 0; i < variables.length; i++) {
+              const idVariable = variables[i].idVariable;
+              const command = variables[i].command;
+              if (domNode.attribs.command === idVariable
+                && domNode.attribs.class === command) {
+                const attributes = {
+                  ...domNode.attribs,
+                  className: domNode.attribs.class,
+                };
+                const spanContent = domToReact(domNode.children);
 
-    function another(html,{idVariable,category,command,text}){
-      // the html is actually text to be set in as innerHTML
-      // find the element with the command=idVariable and class=command
-      // dont use the document.querySelector here because it will search the whole document and not the html
-      let element = html.replace(new RegExp(`<span command='${idVariable}' class='${command}'>(.*?)<\/span>`),`<span command='${idVariable}' class='wrapped-in-reactive ${command}' text='${text}'>$1</span>`);
-      if(element){
-        console.log("Element Found",element)
-        // return the new html
-        return element
-      }else{
-        console.log("Element Not Found")
-      }
-      return html;
+                return (
+                <ClickAwayListener onClickAway={() => {}} >{/*onClickAway={handleTooltipClose}>*/}
+                  <Tooltip
+                    disableFocusListener
+                    disableTouchListener
+                    title={variables[i].text}
+                    placement="top-start" 
+                    arrow
+                  ><span {...attributes}>{spanContent}</span></Tooltip>
+                </ClickAwayListener>
+                );
+              }
+            }
+          }
+        },
+      };
+    
+      // Parse the HTML string with the transformation logic
+      return parse(htmlString, options);
     }
-    html = another(html,{idVariable: "Args",category: "command",command: "highlight",text: "CODIGO FONTE"});
-
+    
     return (
-      <Styledhmtl dangerouslySetInnerHTML={{ __html: html }}/>
+      <Styledhmtl>
+        {wrapSpansWithTooltip(html,reactiveVariables)}
+      </Styledhmtl>
     );
 }
 

@@ -246,7 +246,6 @@ const Previous = ({order,slideChanger,currentSlide}) => {
   }
 
   let previous = getPrevious(order,currentSlide);
-  console.log("Previous of", currentSlide, "is", previous);
   if(previous.length == 1){
     if(previous[0] == -1){
       return <span className="prev"></span>
@@ -302,7 +301,6 @@ const Next = ({order,slideChanger,currentSlide}) => {
   }
 
   let next = getNext(order,currentSlide);
-  console.log("Next of", currentSlide, "is", next);
   if(next.length == 1){
     if(next[0] == -1){
       return <span className="next"></span>

@@ -121,7 +121,41 @@ function Demo({ id=null }) {
     return var_with_text.length > 0
   }
 
-  console.log("Current Slide:", currentSlide);
+  const getReactiveVariables = (variablesIds,variables) => {
+    var reacts_commands = [];
+    variables.forEach(element => {
+      if(element.category.trim() == "command")
+        if(element.type.trim() == "reactive")
+          reacts_commands.push(element.idVariable)
+    });
+    var reactives = [];
+    variables.forEach(element => {
+      if(variablesIds.includes(element.idVariable)){
+        if(reacts_commands.includes(element.command.trim()))
+          reactives.push(element)
+      }
+    });
+    return reactives
+  }
+
+  const getFixedVariables = (variablesIds,variables) => {
+    var reacts_commands = [];
+    variables.forEach(element => {
+      if(element.category.trim() == "command")
+        if(element.type.trim() == "fixed")
+          reacts_commands.push(element.idVariable)
+    });
+    var reactives = [];
+    variables.forEach(element => {
+      if(variablesIds.includes(element.idVariable)){
+        if(reacts_commands.includes(element.command.trim()))
+          reactives.push(element)
+      }
+    });
+    return reactives
+  }
+
+  var fixedVariables = [];
 
   return (data.slides.length + data.variables.length === 0) ? (
       <header className="App-header">
@@ -140,18 +174,41 @@ function Demo({ id=null }) {
             </tr>
             {(data.slides[currentSlide].description && data.slides[currentSlide].description.trim() !== "") &&
             <tr>
-              <td className="slide-description"><h3>{data.slides[currentSlide].description}</h3></td>
+              <td className="slide-description">
+                <h3>{data.slides[currentSlide].description}</h3></td>
               <td ></td>
             </tr>
             }
+            {(data.slides[currentSlide].exercises.length > 0) && (
+            (data.slides[currentSlide].exercises.length == 1) ?
+              (
+                <tr>
+                  <td className="slide-exercise">
+                    <p><b>PRACTICE:</b> {data.slides[currentSlide].exercises[0].text}</p>
+                  </td>
+                  <td></td>
+                </tr>
+              ):(
+                
+                <tr>  
+                <td>
+                  <h3>Let's practice:</h3>
+                {data.slides[currentSlide].exercises.map((exercise,index) => (
+                  <p className="slide-exercise" id={exercise.idExercise}><b>Exercise {index+1}:</b>{exercise.text}</p>
+                ))}
+                </td>
+                <td></td>
+                </tr>
+              ))
+            }
             <tr>
               <td className="slideshow-container">
-                <SourceCode slide = {data.slides[currentSlide]} style={stylesFromVariables(data.variables)} />
+                <SourceCode slide={data.slides[currentSlide]} reactiveVariables = {getReactiveVariables(data.slides[currentSlide].variables,data.variables)} style={stylesFromVariables(data.variables)} />
               </td>
               { data.slides[currentSlide].variables.length > 0 &&
               <td className="annotations-container">{
-                (isTextVariables(data.slides[currentSlide].variables,data.variables)) ? (
-                <Annotations variables = {data.variables} currentVariables = {data.slides[currentSlide].variables} style={stylesFromVariables(data.variables)} /> 
+                (fixedVariables = getFixedVariables(data.slides[currentSlide].variables,data.variables), fixedVariables.length>0) ? (
+                <Annotations currentVariables = {fixedVariables} style={stylesFromVariables(data.variables)} /> 
                 ):(null)
                 }
               </td>

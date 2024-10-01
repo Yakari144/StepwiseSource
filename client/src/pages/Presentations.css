@@ -1,0 +1,96 @@
+.presentations-page {
+  background-color: #f5f5dc;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.presentations-container {
+  padding: 20px;
+  width: 80vw;
+  background-color: #f5f5dc; /* Beige tone */
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+.presentations-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: auto;
+  padding-left: 0;
+  border-radius: 10px; /* Rounded corners for the table */
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.presentations-table th,
+.presentations-table td {
+  padding: 10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  border-bottom: 1px solid #ddd;
+}
+
+.presentations-table th {
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+}
+
+.presentations-table td {
+  background-color: #fff;
+}
+
+.action-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.go-to-button {
+  background-color: #000;
+  color: white;
+}
+
+.go-to-button:hover {
+  background-color: #333;
+}
+
+.share-button {
+  background-color: #ff9800; /* Orange for share */
+  color: white;
+}
+
+.share-button:hover {
+  background-color: #e68a00;
+}
+
+.presentations-table td[colspan="2"] {
+  text-align: center;
+  font-style: italic;
+}
+
+.create-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin: 20px auto;
+}
+
+.create-button:hover {
+  background-color: #45a049;
+}
