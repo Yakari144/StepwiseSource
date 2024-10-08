@@ -1,88 +1,91 @@
-\newfixed{bold}{
-    bold
-}
+\newfixed{important}{color: green; bold}
+\newfixed{removed}{color: red; strikethrough}
+\newreactive{tip}{color: blue; italic}
+\newreactive{curiosity}{color: purple; underline}
+\newfixed{info}{color: #4B0082; bold}
 
-\newfixed{highlight1}{
-    color : pink;
-    bold
-}
-\newfixed{highlight2}{
-    color : purple;
-    bold
-}
-\newfixed{highlight3}{
-    color : red;
-    bold
-}
-
-\slide{EmptySlide}{1 Create an empty slide}
+\slide{hello}{Hello!}
+\description{Hi there! This presentation shows how to create your own using Stepwise Source. The code below is the bare minimum necessary for a presentation. From now on, you can follow the notes on the right side and hover over text that is highlighted.}
 \begin
-\bold{\\slide\{\}\{\}}{ }
+\\slide\{id\}\{Title\}
+\\description\{Description for the slide.\}
+\\begin
+  Your code goes here.
+  \important{This looks highlighted.}{This is the first note that was inserted into the code. Notice how the formatting on the source code is the same as in this note.}  
+  \removed{This looks like it has been removed!}{You can define your own styles for the highlighting of the source code.} 
+  \tip{Hover the mouse here.}{Some notes may show only when hovered.}         
+
+\\end
+\\order\{id\}
 \end
 
-\slide{SlideTitle}{2 Create a slide with a title}
+\slide{createF}{Create your commands}
+\description{Did you like the styling on the previous slide? This is how you can create your own commands.}
 \begin
-\\slide\{\highlight1{Begining}{Here you will set the ID of the slide you are creating}\}\{\highlight2{This is the first slide}{This is where you will set the title of the slide}\}
+\info{\\newfixed\{info\}\{color: #4B0082; bold\}}{This code lets you style your text like this, and the 'newfixed' command makes sure the explanation stays visible at all times.}      
+   
+\\slide\{id\}\{Title\}
+\\description\{Description for the slide.\}
+\\begin
+  Your code goes here.
+  \important{This looks highlighted.}{ }  
+  \removed{This looks like it has been removed!}{ } 
+  \tip{Hover the mouse here.}{Some notes may show only when hovered.}         
+    
+\\end
+\\order\{id\}
 \end
 
-\slide{SlideContent}{3 Create a slide with a title and a content}
+\slide{createR}{Create your commands}
+\description{Did you like the styling on the previous slide? This is how you can create your own commands.}
 \begin
-\\slide\{Begining\}\{This is the first slide\}
-\bold{\\begin
-This is the content of the slide
-\\end}{This is the content of the slide}
+\curiosity{\\newreactive\{tip\}\{color: purple; underline\}}{This code allows you to style your text just like this line. The text is only visible on hover because the 'newreactive' command is applied.}
+
+\\slide\{id\}\{Title\}
+\\description\{Description for the slide.\}
+\\begin
+  Your code goes here.
+  \important{This looks highlighted.}{ }  
+  \removed{This looks like it has been removed!}{ } 
+  \tip{Hover the mouse here.}{Some notes may show only when hovered.}         
+    
+\\end
+\\order\{id\}
 \end
 
-\slide{CreateCommand}{7 Create new styling commands}
+\slide{apply}{Apply the commands you've created}
+\description{Now that you know how to create your styling commands, let's use them to style your code!}
 \begin
-\bold{\\newfixed\{\highlight1{\\highlight}{Here you can define the name of the command}\}\{
-    \highlight2{color : red;
-    background-color : lime;
-    border-color : #0000ff;
-    bold;
-    italic;
-    underline}{The content inserted here will be the styling of the command, you can define the color, background-color, border-color, bold, italic, underline and strikethrough}
-\}}{ }
+\\newfixed\{info\}\{color: #4B0082; bold\}
+\\newreactive\{tip\}\{color: purple; underline\}
+
+\\slide\{id\}\{Title\}
+\\description\{Description for the slide.\}
+\\begin
+  Your code goes here.
+  \\tip\{\curiosity{This looks highlighted but the text only shows on hover.}{Here is where you set the observation of the highlighted code.}\}\{Here is where you set the observation of the highlighted code.\}
+  \\info\{\info{This one shows the explanation at all times.}{The fixed explanation is shown here.}\}\{The fixed explanation is shown here.\}       
+    
+\\end
+\\order\{id\}
 \end
 
-\slide{GlobalVars}{4 Add global variables}
+\slide{order}{Set the paths your presentation can take}
+\description{You might be wondering, 'What is the purpose of the order command, and how do I use it?' Here's how it was applied to define the path of this presentation.}
 \begin
-\bold{
-\\highlight\{Comment\}\{This highlighted text is commented by this text\}
-}{This is how you can add a global comment that can be used in the slides}
+\\newfixed\{info\}\{color:green; bold\}
+\\newreactive\{info\}\{color:green; bold\}
+
+\\slide\{id\}\{Title\}
+\\description\{Description for the slide.\}
+\\begin
+  Your code goes here.
+  \important{This looks highlighted.}{ }  
+  \removed{This looks like it has been removed!}{ } 
+  \tip{Hover the mouse here.}{Some notes may show only when hovered.}         
+    
+\\end
+\\order\{firstSlide,\important{(paralelOne|paralelTwo)}{This is how you can split the path of your slide presentation. You can use it to demonstrate different ways a feature can be applied, highlight correct or incorrect methods of using a capability, and much more.},\info{anotherSlide,endingSlide}{This is how you can set the sequence of your slide presentation. You can use it to guide the flow step by step, showing features in a specific order, ensuring the content is presented in the right progression.}\}
 \end
 
-\slide{ApplyGlobalVars}{5 Apply those global variables to the slide}
-\begin
-\end
-
-\slide{LocalVars}{6 Add and apply local variables}
-\begin
-\end
-
-
-\slide{ApplyCommand}{8 Apply those stylings to the slide}
-\begin
-\end
-
-\slide{ChangeCommand}{9 Make slight changes to the styling command}
-\begin
-\end
-
-\slide{Exercise}{10 Create Exercise command}
-\begin
-\end
-
-\slide{ApplyEx}{11 Apply the exercise command to the slide}
-\description{Texto intodutório ao exercício}
-\begin
-\end
-
-\slide{RightWrong}{12 Rigth answer to the exercise and wrong answer to the exercise}
-\begin
-\end
-
-\order{EmptySlide,(SlideTitle,SlideContent,GlobalVars)|GlobalVars,
-            (ApplyGlobalVars,LocalVars,CreateCommand)|CreateCommand,
-            (ApplyCommand,ChangeCommand,Exercise)|Exercise,
-            ApplyEx,RightWrong}
+\order{hello,(createF|createR),apply,order}

@@ -67,7 +67,7 @@ mycss: TXT_COLOR ":" COLOR
     | TXT_ALIGN ":" ALIGN
     | TXT_STYLE ":" STYLE               // ??
 
-TXT_COLOR: "color"
+TXT_COLOR: "text\-color" | "color"
 BG_COLOR: "background-color"
 BORDER_COLOR: "border-color"
 BOLD: "bold"
@@ -172,6 +172,9 @@ class MyInterpreter(Interpreter):
         #            f.write("}\n")
         #    f.close()
         self.visit_children(tree)
+        if self.order_array == [] and self.order_ids == []:
+            raise Exception("Order of the presentation was not defined.")
+            
         # check if [k,b,c] in [a,c,d,b,e,w,f,t,g,k,y]
         non_existing_ids = [x for x in self.order_ids if x not in self.slides.keys()]
         if len(non_existing_ids) > 0:
@@ -199,6 +202,7 @@ class MyInterpreter(Interpreter):
                 if e.type == "ID":
                     key = e.value
         #print(key,value)
+        #print("REACTIVE COMMAND",key,"with style",value)
         self.cmds[key] = {"category":"command","type":"reactive","style":value}
     
     # nfixed: "\\" NEWFIXED "{" ID "}" "{" mycss (";" mycss)* "}"
@@ -213,6 +217,7 @@ class MyInterpreter(Interpreter):
                 if e.type == "ID":
                     key = e.value
         #print(key,value)
+        #print("REACTIVE COMMAND",key,"with style",value)
         self.cmds[key] = {"category":"command","type":"fixed","style":value}
 
     def mycss(self,tree):
@@ -343,7 +348,7 @@ class MyInterpreter(Interpreter):
         for e in tree.children:
             if type(e) == Tree:
                 if e.data == "content":
-                    self.slides[self.current_slide]["code"] += self.visit(e)
+                    self.slides[self.current_slide]["code"] += self.visit(e).replace("\n","<br>")
         self.slides[self.current_slide]["code"] += "</span>"
         self.current_slide = ""
 
@@ -356,7 +361,7 @@ class MyInterpreter(Interpreter):
                 if e.data == "entry":
                     self.current_content[-1] += self.visit(e)
                 elif e.data == "code":
-                    self.current_content[-1] += self.visit(e)
+                    self.current_content[-1] += self.visit(e).replace("\n","<br>")
         current_content = self.current_content.pop()
         return current_content
 
@@ -425,7 +430,7 @@ class MyInterpreter(Interpreter):
         for e in tree.children:
             if e.type == "CODE":
                 # convert every \\ to \
-                value = e.value.replace("\\\\","\\").replace("\\{","{").replace("\\}","}")
+                value = e.value.replace("\\\\","\\").replace("\\{","{").replace("\\}","}").replace("\n","<br>")
                 self.current_content += value
                 #print(self.current_content)
                 return value

@@ -12,7 +12,7 @@ const StyledHTML = ({style, reactiveVariables, html}) => {
           ${property}: ${style[key][property]};
         `).join(' ')}
       }
-    `).join(' ').concat(".wrapped-in-reactive:hover {background-color: black;color: white;text-decoration: underline;}")}
+    `).join(' ')}
     `
 
     function wrapSpansWithTooltip(htmlString, variables) {

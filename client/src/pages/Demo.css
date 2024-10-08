@@ -5,7 +5,8 @@
 .Demo {
   background-color: beige;
   min-height: 100vh;
-  height: 100%;
+  height: max-content;
+  min-width: 100vh;
 }
 
 /* Next & previous buttons */
@@ -188,22 +189,6 @@ table {
   align-items: center;
   height: 100%;
   text-align: center;
-}
-
-.wrapped-in-reactive:hover {
-  background-color: black;
-  color: white;
-  text-decoration: underline;
-}
-
-.graph-container {
-  position: relative;
-  display: inline-block;
-  border: 2px solid black;
-  background-color: white;
-  border-radius: 15px;
-  width: fit-content;
-  height: fit-content;
 }
 
 .graph {

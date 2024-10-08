@@ -7,9 +7,11 @@ const GraphNode = ({ x, y,id,zoom, selected,onClick }) => (
     r={5*zoom} 
     className="dot" 
     id={"dot_"+id}
+    background-color="red"
     stroke={selected ? "green" : "none"}
     strokeWidth={selected ? "3" : "1"}
     onClick={onClick}
+    fill={selected ? "white" : "#000"}
   />
 );
 
