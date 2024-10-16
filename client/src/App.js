@@ -6,6 +6,7 @@ import ErrorPage from './pages/ErrorPage';
 import Documentation from './pages/Documentation';
 import Home from './pages/Home';
 import Presentations from './pages/Presentations';
+import About from './pages/About'
 
 function App() {
   try{
@@ -15,10 +16,12 @@ function App() {
         <Routes>
           <Route path="/demo/:id" element={<Demo />} />
           <Route path="/create" element={<NewDemo />} />
+          <Route path="/edit/:idDemo" element={<NewDemo />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/documentation" element={<Documentation />} />
           <Route path="/tutorial" element={<Demo id="IDtutorial" />} />
           <Route path="/presentations" element={<Presentations />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>

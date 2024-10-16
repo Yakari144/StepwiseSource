@@ -65,7 +65,6 @@ mycss: TXT_COLOR ":" COLOR
     | STRIKETHROUGH
     | TXT_SIZE ":" NUM
     | TXT_ALIGN ":" ALIGN
-    | TXT_STYLE ":" STYLE               // ??
 
 TXT_COLOR: "text\-color" | "color"
 BG_COLOR: "background-color"
@@ -89,15 +88,11 @@ COLOR: "red"
     | "magenta"
     | "lime"
     | HEX
-STYLE: "normal"
-    | "italic"
-    | "oblique"
 ALIGN: "left"
     | "right"
     | "center"
 NUM: /[0-9]+/
 TXT_SIZE: "text-size"
-TXT_STYLE: "text-style"
 TXT_ALIGN: "text-align"
 HEX: /\#[0-9a-fA-F]{6}/
     
@@ -500,12 +495,17 @@ def addToDB(slides,variables,order):
         f.write(json.dumps([slides,variables,order], indent=4, sort_keys=True, ensure_ascii=False))
         f.close()
 
-    # Add the demo to the database
-    colDemos.insert_one(slides)
-    colSlides.insert_one(variables)
-    colOrders.insert_one(order)
+    try:
+        # Define the filter to find a document with the matching idDemo
+        filter = {"idDemo": slides['idDemo']}
 
-    #print("Demo added to the database")
+        # Perform the upsert (update or insert if doesn't exist)
+        colDemos.update_one(filter, {"$set": slides}, upsert=True)
+        colSlides.update_one(filter, {"$set": variables}, upsert=True)
+        colOrders.update_one(filter, {"$set": order}, upsert=True)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # Close the connection
     client.close()
@@ -520,6 +520,7 @@ def main(filename,demoName, idDemo=None):
         idDemo = "DI"+str(abs(int(hash(frase))))
     print(idDemo)
     slides = handleSlides(data['slides'],demoName,idDemo)
+    slides["demoText"] = frase
     variables = handleVariables(data['variables'],idDemo)
     order = handleOrder(data['order'],idDemo)
 

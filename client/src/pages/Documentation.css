@@ -13,7 +13,25 @@
 }
 
 .documentation {
-  padding: 20px;
+  margin: 0 auto;
+  width: 80vw;
+}
+
+.syntax-example {
+  text-align: center;
+}
+
+.code-div {
+  display: flex;
+  justify-content: center;
+}
+
+.code-example {
+  margin: 0 auto; /* Center horizontally */
+  max-width: 100%; /* Set a max width if needed */
+  padding: 10px; /* Optional: add some padding */
+  white-space: pre-wrap; /* Allow wrapping and preserve whitespace */
+  word-wrap: break-word;
 }
 
 .doc-header {
@@ -31,11 +49,6 @@
   background-color: #fff;
 }
 
-pre {
-  padding: 10px;
-  border-radius: 5px;
-}
-
 table.doc-table {
   width: 100%;
   border-collapse: collapse;
@@ -51,6 +64,12 @@ table.doc-table td {
 table.doc-table th {
   background-color: #f1f1f1;
   color: #333;
+}
+
+.break-text {
+  white-space: pre-wrap; /* Allows text to wrap */
+  word-wrap: break-word; /* Breaks long words if necessary */
+  overflow-wrap: break-word; /* Breaks long words in all browsers */
 }
 
 .doc-footer {

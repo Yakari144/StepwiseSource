@@ -28,7 +28,15 @@ const Presentations = () => {
     },[navigate]);
 
     const handleGoToPresentation = (idDemo) => {
+      if(idDemo == "IDtutorial")
+        navigate(`/tutorial`)
+      else
         navigate(`/demo/${idDemo}`);
+    }
+
+    const handleEditPresentation  = (idDemo) => {
+      console.log(idDemo)
+      navigate(`/edit/${idDemo}`)
     }
 
 
@@ -53,6 +61,14 @@ const Presentations = () => {
               <tr key={index}>
                 <td>{presentation.demoName}</td>
                 <td>
+                  {(presentation.idDemo != "IDtutorial") &&
+                  <button
+                    className="action-button go-to-button"
+                    onClick={() => handleEditPresentation(presentation.idDemo)}
+                  >
+                    Edit
+                  </button>
+                  }
                   <button
                     className="action-button go-to-button"
                     onClick={() => handleGoToPresentation(presentation.idDemo)}

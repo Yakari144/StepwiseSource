@@ -21,7 +21,7 @@ module.exports.getDemo = (id) => {
         })
 }
 
-module.exports.generateDemo = (text) => {
+module.exports.generateDemo = (name,text) => {
         // generate Demo by using the parser.py script with the text provided as input
         // call the parser.py script with the text as input
         var spawn = require("child_process").spawn;
@@ -29,7 +29,21 @@ module.exports.generateDemo = (text) => {
         var fs = require('fs');
         fs.writeFileSync("temp.txt", text);
         // call the parser.py script with the temporary file as input
-        var process = spawn('python3',["./parser.py", "temp.txt"]);
+        var process = spawn('python3',["./parser.py", "temp.txt", name]);
+        process.stdout.on('data', function(data) {
+            return data.toString()
+        });
+}
+
+module.exports.editDemo = (id,name,text) => {
+        // generate Demo by using the parser.py script with the text provided as input
+        // call the parser.py script with the text as input
+        var spawn = require("child_process").spawn;
+        // create a temporary file to store the text
+        var fs = require('fs');
+        fs.writeFileSync("temp.txt", text);
+        // call the parser.py script with the temporary file as input
+        var process = spawn('python3',["./parser.py", "temp.txt",name,id]);
         var output = {"idDemo":""};
         process.stdout.on('data', function(data) {
             output = {"idDemo":data.toString()};
