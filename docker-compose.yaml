@@ -18,6 +18,9 @@ services:
       - "50741:50741"
     volumes:
       - ./backend:/app
+    env_file:
+      - ../.env.production # Load the production env file
+      - ./.env
     environment:
       - PYTHONUNBUFFERED=1
       - MONGO_URI=mongodb://mongo:27017/
