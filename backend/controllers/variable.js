@@ -21,7 +21,6 @@ module.exports.getVariable = (id) => {
         })
 }
 
-
 module.exports.updateVariable = (id,a) => {
         return Variable.updateOne({idDemo: id},a)
             .then(Variable => {

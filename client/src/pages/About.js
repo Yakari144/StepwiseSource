@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import FeedbackForm from '../components/FeedbackForm';
 
 function About() {
-   
     return (
         <div className="about-page">
             <div className="AboutHeader">

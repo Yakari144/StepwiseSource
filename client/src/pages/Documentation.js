@@ -56,6 +56,7 @@ const Documentation = () => {
                 {/* Slide + Code Block */}
                 <section className="doc-section">
                     <h3>Slide + Code Block</h3>
+                    <h4>Syntax:</h4>
                     <p>
                         Every presentation in StepwiseSource starts with a slide. The slide definition is created with the following 
                         syntax:
@@ -75,7 +76,7 @@ const Documentation = () => {
                             <li><b>ID</b>: A unique identifier for the slide.</li>
                             <li><b>TITLE</b>: The slide title, displayed to the students.</li>
                             <li><b>DESCRIPTION</b> (optional): A short explanation that appears before the main content, providing context.</li>
-                            <li><b>content</b>: The body of the slide, where the educator can add code snippets, explanations, or other material.</li>
+                            <li><b>content</b>: The body of the slide, where the educator can add code snippets, explanations and fill-in boxes that function as exercises.</li>
                         </ul>
                     </p>
                     <h4>Example:</h4>
@@ -89,6 +90,7 @@ const Documentation = () => {
 \\END
                         `}</b>
                     </pre></div>
+                    <h1>MUDAR ESTA FRASE, PORQUE É O PRIMEIRO SLIDE</h1>
                     <p>
                     This expands on the previous example by adding a description explaining the role of variables in programming.
                     </p>
@@ -96,12 +98,13 @@ const Documentation = () => {
                      
                 {/* Reserved Symbols */}   
                 <section className="doc-section">
-                    <h3>Reserved Symbols</h3>
+                    <h3>Special Characters</h3>
                     <p>
                         In the Stepwise DSL, special characters like <b>`&#92;`</b>, <b>`&#123;`</b>, and <b>`&#125;`</b> are reserved. If you 
                         need to include these characters in the slide content, you must escape them using <b>`&#92;`</b>.
                     </p>
                     <h4>Running Example:</h4>
+                    <h1>ADICIONAR A DEFINICAO DE MAIN EM C PARA TER TAMBEM AS <b>`&#123;`</b> <b>`&#125;`</b> </h1>
                     <div className="code-div"><pre className="code-example">
                         {`
 \\SLIDE{Intro}{Introduction to Variables}
@@ -122,10 +125,11 @@ const Documentation = () => {
                 <section className="doc-section">
                     <h3>Styling: newreactive and newfixed</h3>
                     <p>
-                        The DSL allows you to define styles that can either be revealed during user interaction (<b>newreactive</b>) or always 
-                        visible (<b>newfixed</b>). These commands help to highlight or alter specific parts of the content for emphasis or 
+                        The DSL allows you to define styles that can either be revealed by mouse hover (<b>newreactive</b>) or stay always 
+                        visible (<b>newfixed</b>). These commands help to highlight specific parts of the content for emphasis or 
                         clarification.
                     </p>
+                    <h4>Example:</h4>
                     <pre className="syntax-example"><b>
                         {`
 \\NEWREACTIVE{ID}{style; style; ...}
@@ -154,6 +158,8 @@ const Documentation = () => {
                             <li><b>removed</b> will apply red text with a strikethrough to denote removed content.</li>
                         </ul>
                     </p>
+                    <h4>Usage:</h4>
+                    <h1>ADICIONAR A PARTE RELACIONADA DO "STYLING USAGE" AQUI, ADAPTADA PARA SÓ ESTE</h1>
                 </section>
                   
                 {/* User Defined Styling */}  
@@ -192,10 +198,13 @@ const Documentation = () => {
 \\END
                         `}
                     </pre></div>
+                    <h4>Usage:</h4>
+                    <h1>ADICIONAR A PARTE RELACIONADA DO "STYLING USAGE" AQUI, ADAPTADA PARA SÓ ESTE</h1>
                 </section>
                  
                 {/* Styling Usage */}   
                 <section className="doc-section">
+                    <h1>DEPOIS DE DISTRIBUIR PELOS OUTROS SECTIONS APAGAR ISTO</h1>
                     <h3>Styling Usage</h3>
                     <p>
                         Now that you know how to create your Styling and User Defined Styling commands, it's time to learn how to actually use them in your slides to improve your presentations.
@@ -253,6 +262,7 @@ const Documentation = () => {
                         StepwiseSource allows styling to be defined using familiar CSS-like syntax. You can control text color, background, 
                         borders, and other visual elements. Below is a table of the supported styling rules.
                     </p>
+                    <h1>COLOCAR EM ITALICO AS CORES E POR "COLOR"; SE NECESSARIO COLOCAR UM EXEMPLO DE CRIAR UM COMANDO COM VARIOS TOPICOS</h1>
                     <table className="doc-table">
                         <thead>
                             <tr>

@@ -3,20 +3,14 @@
 # syntax=docker/dockerfile:1.4
 FROM ubuntu:latest
 
-# Install Python and Node.js
-#RUN apt-get update && apt-get install -y python3 python3-pip nodejs npm
-
 # Update package list and install prerequisites
 RUN apt-get update && apt-get install -y curl netcat
 
 # Add NodeSource official repository for Node.js 16.x
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 
-# Install Node.js 16.x and other packages
+# Install Node.js 16.x, python and other packages
 RUN apt-get install -y nodejs python3 python3-pip
-
-#
-RUN node --version
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -33,6 +27,9 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 RUN npm ci
 
 COPY . /usr/src/app
+
+# Copy the .env.production file into the container
+COPY .env.production .env
 
 EXPOSE 50741
 

@@ -9,7 +9,7 @@ function HomePage() {
           <Header pages={["Presentations","Documentation","About"]}/>
       </div>
       <div className="home-container">
-        <img className="home-image" src="/logo192.png" alt="home-image" />
+        <img className="home-image" src="/logo512.png" alt="home-image" />
         <h1 className="title">Welcome to Stepwise Source</h1>
         <div className="button-container">
           <button className="home-button" onClick={() => window.location.href='/create'}>

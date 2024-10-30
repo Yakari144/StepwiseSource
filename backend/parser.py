@@ -196,8 +196,6 @@ class MyInterpreter(Interpreter):
             else:
                 if e.type == "ID":
                     key = e.value
-        #print(key,value)
-        #print("REACTIVE COMMAND",key,"with style",value)
         self.cmds[key] = {"category":"command","type":"reactive","style":value}
     
     # nfixed: "\\" NEWFIXED "{" ID "}" "{" mycss (";" mycss)* "}"
@@ -243,9 +241,6 @@ class MyInterpreter(Interpreter):
         for t in tree.children:
             if type(t) == Tree:
                 r.extend(self.visit(t))
-        #with open("out/graph/"+str(hash(self.graph))+".dot","w") as f:
-        #    f.write(self.graph+"}")
-        self.graph = "digraph G {\n"
         self.order_array = r
         
     def exp(self,tree):

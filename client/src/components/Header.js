@@ -8,7 +8,7 @@ const Header = ({ pages }) => {
             <nav className="navbar">
                 <ul className="nav-logo">
                     <Link to="/" className="nav-item">
-                        <img className="header-img" src="/logo512.png" alt="home-image" />
+                        <img className="header-img" src="/logo192.png" alt="home-image" />
                         StepwiseSource
                     </Link>
                 </ul>
