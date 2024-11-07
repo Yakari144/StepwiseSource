@@ -10,13 +10,19 @@ MONGODB_PORT = "50744"
 grammar = r'''
 //Regras Sintaticas
 start: commands
-commands: command+
+commands: command+ order
 
 command: slide description? code_block
     | nreactive
     | nfixed
-    | order
     | variable // Commands created using nreactive or nfixed
+    | comment
+    
+// COMANDO % texto de comentário
+comment: "%" NOT_NL NL
+
+NOT_NL: /[^\n]+/
+NL: /\n/
     
 // COMANDO \slide{VarsLoc}{Sobre as variáveis locais}
 slide : "\\" SLIDE "{" ID "}" "{" TEXT "}"
@@ -36,7 +42,7 @@ entry: "\\" EXERCISE "{" REGEX "}" "{" TEXT "}"
 NOT_END: /(?![eE][nN][dD])[a-zA-Z][a-zA-Z0-9_]+/
 
 code: CODE
-CODE: /(\\\\|\\\}|\\\{|[^\\\}\{])+/
+CODE: /(\\\\|\\\}|\\\{|[^\\\}\{]|\n)+/
     
 // COMANDO \order{a,b,(c|d),e}
 order: "\\" ORDER "{" exp "}"
@@ -96,7 +102,6 @@ TXT_SIZE: "text-size"
 TXT_ALIGN: "text-align"
 HEX: /\#[0-9a-fA-F]{6}/
     
-
 NOTE: "nota" | "note"
 SLIDE: "diapositivo" | "slide"
 DESCRIPTION: "descricao" | "description"
@@ -107,8 +112,6 @@ EXERCISE: "exercicio" | "exercise"
 ORDER: "ordem" | "order"
 NEWREACTIVE: "novoreativo" | "newreactive"
 NEWFIXED: "novofixo" | "newfixed"
-
-
 
 //Regras Lexicográficas
 ID: ("a".."z"|"A".."Z")("a".."z"|"A".."Z"|"_"|"0".."9")*
