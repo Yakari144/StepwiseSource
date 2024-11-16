@@ -274,7 +274,6 @@ int main()\\{
                         StepwiseSource allows styling to be defined using familiar CSS-like syntax. You can control text color, background, 
                         borders, and other visual elements. Below is a table of the supported styling rules.
                     </p>
-                    <h1>COLOCAR EM ITALICO AS CORES E POR "COLOR"; SE NECESSARIO COLOCAR UM EXEMPLO DE CRIAR UM COMANDO COM VARIOS TOPICOS</h1>
                     <table className="doc-table">
                         <thead>
                             <tr>
