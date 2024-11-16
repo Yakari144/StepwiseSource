@@ -90,9 +90,8 @@ const Documentation = () => {
 \\END
                         `}</b>
                     </pre></div>
-                    <h1>MUDAR ESTA FRASE, PORQUE É O PRIMEIRO SLIDE</h1>
                     <p>
-                    This expands on the previous example by adding a description explaining the role of variables in programming.
+                        In this example, the slide titled <b>Introduction to Variables</b> introduces the concept of variables and demonstrates their use in a simple code snippet.
                     </p>
                 </section>
                      
@@ -104,15 +103,16 @@ const Documentation = () => {
                         need to include these characters in the slide content, you must escape them using <b>`&#92;`</b>.
                     </p>
                     <h4>Running Example:</h4>
-                    <h1>ADICIONAR A DEFINICAO DE MAIN EM C PARA TER TAMBEM AS <b>`&#123;`</b> <b>`&#125;`</b> </h1>
                     <div className="code-div"><pre className="code-example">
                         {`
 \\SLIDE{Intro}{Introduction to Variables}
 \\DESCRIPTION{Variables are used to store values that can be accessed later on.}
 \\BEGIN
+int main()\\{
     int x = 5;
     int y = x + 10;
     char* st = "a normal string `}<b>\\n</b>{`";
+\\}
 \\END
                         `}
                     </pre></div>
@@ -145,9 +145,11 @@ const Documentation = () => {
 \\SLIDE{Intro}{Introduction to Variables}
 \\DESCRIPTION{Variables are used to store values that can be accessed later on.}
 \\BEGIN
+int main()\\{
     int x = 5;
     int y = x + 10;
     char* st = "a normal string \\\\n";
+\\}
 \\END
                         `}
                     </pre></div>
@@ -159,7 +161,42 @@ const Documentation = () => {
                         </ul>
                     </p>
                     <h4>Usage:</h4>
-                    <h1>ADICIONAR A PARTE RELACIONADA DO "STYLING USAGE" AQUI, ADAPTADA PARA SÓ ESTE</h1>
+                    <p>
+                        In order to apply the Styling command directly in the code, the syntax is:
+                    </p>
+                    <pre className="syntax-example"><b>
+                        {`
+\\ID{CODE}{TEXT}
+                        `}</b>
+                    </pre>
+                    <p>
+                        Where:
+                        <ul>
+                            <li><b>ID</b> reffers to the identifier of a previously created styling command.</li>
+                            <li>The <b>CODE</b> is the code snippet that will be styled.</li>
+                            <li><b>TEXT</b> is the annotation related to the code snippet.</li>
+                        </ul>
+                    </p>
+                    <h4>Running Example:</h4>
+                    <div className="code-div"><pre className="code-example">
+                        {`
+\\NEWREACTIVE{highlight}{text-color: green; bold;}
+\\NEWFIXED{removed}{text-color: red; strikethrough;}
+
+\\SLIDE{Intro}{Introduction to Variables}
+\\DESCRIPTION{Variables are used to store values that can be accessed later on.}
+\\BEGIN
+int main()\\{
+    int x = 5;
+    int y = x + 10;
+    `}<b>{`\\highlight{char* st = "a normal string \\\\n";}{This is how you define a string}`}</b>{`
+\\}
+\\END
+                        `}
+                    </pre></div>
+                    <p>
+                        In this example, the <b>highlight</b> style is applied to the code snippet, marking it as important and providing an explanation.
+                    </p>
                 </section>
                   
                 {/* User Defined Styling */}  
@@ -199,32 +236,6 @@ const Documentation = () => {
                         `}
                     </pre></div>
                     <h4>Usage:</h4>
-                    <h1>ADICIONAR A PARTE RELACIONADA DO "STYLING USAGE" AQUI, ADAPTADA PARA SÓ ESTE</h1>
-                </section>
-                 
-                {/* Styling Usage */}   
-                <section className="doc-section">
-                    <h1>DEPOIS DE DISTRIBUIR PELOS OUTROS SECTIONS APAGAR ISTO</h1>
-                    <h3>Styling Usage</h3>
-                    <p>
-                        Now that you know how to create your Styling and User Defined Styling commands, it's time to learn how to actually use them in your slides to improve your presentations.
-                    </p>
-                    <p>
-                        If you are using a Styling command directly in the code, the syntax is:
-                    </p>
-                    <pre className="syntax-example"><b>
-                        {`
-\\ID{CODE}{TEXT}
-                        `}</b>
-                    </pre>
-                    <p>
-                        Where:
-                        <ul>
-                            <li><b>ID</b> reffers to the identifier of a previously created styling command.</li>
-                            <li>The <b>CODE</b> is the code snippet that will be styled.</li>
-                            <li><b>TEXT</b> is the annotation related to the code snippet.</li>
-                        </ul>
-                    </p>
                     <p>
                         If you took the option of creating a User Defined Styling command, given that the explanation is already defined, the only thing left to associate with the command is the code to be highlighted. Remaining the following syntax:
                     </p>
@@ -234,27 +245,28 @@ const Documentation = () => {
                         `}</b>
                     </pre>
                     <h4>Running Example:</h4>
-                    <p>Let's define a new style to indicate incorrect or removed code, applying it to our previous example:</p>
-                    <div className="code-div"><pre className="code-example"><b>{`
-\\NEWREACTIVE{highlight}{text-color: green; bold;}`}</b>{`
+                    <div className="code-div"><pre className="code-example">
+                        {`
+\\NEWREACTIVE{highlight}{text-color: green; bold;}
 \\NEWFIXED{removed}{text-color: red; strikethrough;}`}<b>{`
 \\removed{error}{This code is has a wrong syntax}`}</b>{`
 
 \\SLIDE{Intro}{Introduction to Variables}
 \\DESCRIPTION{Variables are used to store values that can be accessed later on.}
 \\BEGIN
+int main()\\{
     `}<b>{`\\error{int x == 5.7;}`}</b>{`
     int y = x + 10;
-    `}<b>{`\\highlight{char* st = "a normal string \\\\n";}{This is how you define a string}`}</b>{`
+    char* st = "a normal string \\\\n";
+\\}
 \\END
-    `}
+                        `}
                     </pre></div>
                     <p>
-                    In this example, the <b>error</b> style defined earlier is applied to the code, marking it as removed and associating it with an annotation explaining why it was removed.
-                    Also, the <b>highlight</b> is also applied by assining the explanation specific to that code snippet.
+                        In this example, the <b>error</b> style defined earlier is applied to the code, marking it as removed and associating it with an annotation explaining why it was removed.
                     </p>
                 </section>
-                  
+                                   
                 {/* Styling Syntax: CSS-like Rules */}      
                 <section className="doc-section">
                     <h3>Styling Syntax: CSS-like Rules</h3>
@@ -273,18 +285,18 @@ const Documentation = () => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>text-color: red</td>
-                                <td>color: red</td>
-                                <td>Changes text color to red</td>
+                                <td>text-color: <i>color_value</i></td>
+                                <td>color: <i>color_value</i></td>
+                                <td>Changes text color to the specified <i>color_value</i></td>
                             </tr>
                             <tr>
-                                <td>background-color: blue</td>
-                                <td>background-color: blue</td>
-                                <td>Sets background color to blue</td>
+                                <td>background-color: <i>color_value</i></td>
+                                <td>background-color: <i>color_value</i></td>
+                                <td>Sets background color to <i>color_value</i></td>
                             </tr>
                             <tr>
-                                <td>border-color: #FA0C25</td>
-                                <td>border-color: #FA0C25</td>
+                                <td>border-color: <i>color_value</i></td>
+                                <td>border-color: <i>color_value</i></td>
                                 <td>Defines the color of an element's border</td>
                             </tr>
                             <tr>
