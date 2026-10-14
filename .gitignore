@@ -1,1 +1,31 @@
-client/.env
+# dependencies
+node_modules/
+
+# builds
+client/build/
+build/
+dist/
+
+# env files (keep a committed .env.example instead)
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# local data, logs, scratch
+backend/db/
+logs/
+*.log
+backend/temp.txt
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
